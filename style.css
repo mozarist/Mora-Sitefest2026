@@ -1,0 +1,41 @@
+@import "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4";
+
+@theme {
+	--color-primary: #0f766e;
+	--color-primary-foreground: #ecfeff;
+
+	--color-secondary: #334155;
+	--color-secondary-foreground: #f8fafc;
+
+	--color-accent: #f59e0b;
+	--color-accent-foreground: #1f2937;
+
+	--color-muted: #e2e8f0;
+	--color-muted-foreground: #475569;
+
+	--color-background: #f8fafc;
+	--color-foreground: #0f172a;
+
+	--color-surface: #ffffff;
+	--color-surface-foreground: #0f172a;
+
+	--color-border: #cbd5e1;
+
+	--color-success: #16a34a;
+	--color-success-foreground: #f0fdf4;
+
+	--color-warning: #d97706;
+	--color-warning-foreground: #fffbeb;
+
+	--color-destructive: #dc2626;
+	--color-destructive-foreground: #fef2f2;
+
+	--color-info: #2563eb;
+	--color-info-foreground: #eff6ff;
+}
+
+@layer base {
+	body {
+		@apply bg-background text-foreground;
+	}
+}
