@@ -12,6 +12,11 @@
     rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      scroll-behavior: smooth;
+    }
+  </style>
   <style type="text/tailwindcss">
     @theme {
       --color-background: oklch(98.415% 0.00352 248.585);
@@ -42,14 +47,19 @@
 <body class="space-y-12">
   <header class="fixed top-5 left-1/2 z-50 w-full max-w-4xl -translate-x-1/2 mx-5">
     <nav class="flex items-center justify-between rounded-full bg-surface border border-border p-1 pl-6 shadow-xs">
-      <a href="#" class="text-xl text-primary font-medium tracking-tighter">
-        Mora
-      </a>
+      <div class="flex items-center">
+        <img src="Assets/logo/logo.svg" alt="Mora Logo" class="w-9 h-9" />
+        <a href="#" class="text-xl text-primary font-medium tracking-tighter">
+          Mora
+        </a>
+      </div>
 
       <flex class="flex items-center justify-center gap-5">
-        <a href="#" class="text-muted-foreground hover:underline hover:decoration-blue-700 text-base">Leaderboard</a>
-        <a href="#" class="text-muted-foreground hover:underline hover:decoration-blue-700 text-base">Agenda Sekolah</a>
-        <a href="#" class="text-muted-foreground hover:underline hover:decoration-blue-700 text-base">Rewards</a>
+        <a href="Leaderboard.html"
+          class="text-muted-foreground hover:underline hover:decoration-blue-700 text-base">Leaderboard</a>
+        <a href="#agenda" class="text-muted-foreground hover:underline hover:decoration-blue-700 text-base">Agenda
+          Sekolah</a>
+        <a href="#rewards" class="text-muted-foreground hover:underline hover:decoration-blue-700 text-base">Rewards</a>
       </flex>
 
       <a href="#" class="btn btn-primary" style="padding: 0.8rem 1.5rem;">
@@ -59,7 +69,8 @@
   </header>
 
   <!-- hero -->
-  <section class="flex flex-col justify-center items-center gap-5 pattern-dots min-h-170 w-full p-5 md:p-24 mx-auto">
+  <section id=""
+    class="flex flex-col justify-center items-center gap-5 pattern-dots min-h-170 w-full p-5 md:p-24 mx-auto">
     <div class="space-y-5">
       <div class="space-y-2 w-full">
         <h1 class="text-3xl md:text-5xl lg:text-7xl text-center font-medium tracking-tighter capitalize transition-all">
@@ -75,8 +86,29 @@
         </p>
       </div>
       <div class="flex items-center justify-center gap-2">
-        <a href="#" class="btn btn-primary">Leaderboard Kelas</a>
-        <a href="#" class="btn btn-outline">Reward Poin Tertinggi</a>
+        <a href="#" class="btn btn-primary flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-trophy-icon lucide-trophy">
+            <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978" />
+            <path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978" />
+            <path d="M18 9h1.5a1 1 0 0 0 0-5H18" />
+            <path d="M4 22h16" />
+            <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z" />
+            <path d="M6 9H4.5a1 1 0 0 1 0-5H6" />
+          </svg>
+          Leaderboard Angkatan</a>
+        <a href="#" class="btn btn-outline flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-gift-icon lucide-gift">
+            <path d="M12 7v14" />
+            <path d="M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8" />
+            <path d="M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5" />
+            <rect x="3" y="7" width="18" height="4" rx="1" />
+          </svg>
+          Reward Poin Tertinggi
+        </a>
       </div>
     </div>
 
@@ -94,8 +126,8 @@
     </div>
   </section>
 
-  <!-- tentang Mora -->
-  <main class="flex flex-col items-center justify-center gap-6 p-12 w-full max-w-6xl mx-auto">
+  <main class="flex flex-col items-center justify-center gap-24 p-12 w-full max-w-6xl mx-auto">
+    <!-- tentang Mora -->
     <section class="flex flex-col gap-6 items-center justify-center w-full">
       <div class="max-w-3xl">
         <p class="text-xl md:text-2xl lg:text-3xl text-center tracking-tighter">
@@ -109,7 +141,9 @@
         <div class="relative card space-y-6 -top-0 hover:-top-2 transition-all">
           <img src="Assets/illustrations/people-document.svg" alt="" class="w-full h-40 object-center" />
           <div class="space-y-0">
-            <h5 class="text-2xl text-primary font-medium font-[Instrument_Serif]">Pendataan Siswa</h5>
+            <h5 class="text-xl text-primary font-medium">
+              Pendataan Siswa
+            </h5>
             <p class="text-sm text-muted-foreground">
               Kelola profil siswa, data akademik, dan informasi penting dalam
               satu sistem yang rapi dan mudah diakses.
@@ -119,7 +153,7 @@
         <div class="relative card space-y-6 -top-0 hover:-top-2 transition-all">
           <img src="Assets/illustrations/people-grades.svg" alt="" class="w-full h-40 object-center" />
           <div class="space-y-0">
-            <h5 class="text-2xl text-primary font-medium font-[Instrument_Serif]">
+            <h5 class="text-xl text-primary font-medium">
               Monitoring Perilaku
             </h5>
             <p class="text-sm text-muted-foreground">
@@ -131,12 +165,57 @@
         <div class="relative card space-y-6 -top-0 hover:-top-2 transition-all">
           <img src="Assets/illustrations/guidance.svg" alt="" class="w-full h-40 object-center" />
           <div class="space-y-0">
-            <h5 class="text-2xl text-primary font-medium font-[Instrument_Serif]">
+            <h5 class="text-xl text-primary font-medium">
               Pembinaan Terarah
             </h5>
             <p class="text-sm text-muted-foreground">
               Data yang tercatat membantu guru, wali kelas, dan sekolah
               mengambil langkah pembinaan yang lebih tepat.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-6 items-center w-full h-1000">
+      <div id="rewards" class="max-w-3xl scroll-m-34">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl text-center tracking-tighter">
+          Raih poin tertinggi untuk kelasmu dan dapatkan <span class="text-primary">Rewards</span>nya!
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+        <div class="relative card space-y-6 -top-0 hover:-top-2 transition-all">
+          <img src="Assets/illustrations/barbeque.svg" alt="" class="w-full h-40 object-center" />
+          <div class="space-y-0">
+            <h5 class="text-xl text-primary font-medium">
+              Barbque Party
+            </h5>
+            <p class="text-sm text-muted-foreground">
+              Kumpul seru dengan teman-teman sekelas sambil menikmati hidangan
+              barbeque yang lezat.
+            </p>
+          </div>
+        </div>
+        <div class="relative card space-y-6 -top-0 hover:-top-2 transition-all">
+          <img src="Assets/illustrations/cinema.svg" alt="" class="w-full h-40 object-center" />
+          <div class="space-y-0">
+            <h5 class="text-xl text-primary font-medium">
+              Movies & Popcorn
+            </h5>
+            <p class="text-sm text-muted-foreground">
+              Nikmati film favoritmu bersama teman-teman sekelas sambil menikmati popcorn lezat.
+            </p>
+          </div>
+        </div>
+        <div class="relative card space-y-6 -top-0 hover:-top-2 transition-all">
+          <img src="Assets/illustrations/eating-together.svg" alt="" class="w-full h-40 object-center" />
+          <div class="space-y-0">
+            <h5 class="text-xl text-primary font-medium">
+              Together Dining
+            </h5>
+            <p class="text-sm text-muted-foreground">
+              Nikmati makan bersama teman-teman sekelas di restoran atau kafe.
             </p>
           </div>
         </div>
