@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mora - Dashboard Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+        .card-title-blue { color: #1e1e4b; }
+        
+        .radial-progress {
+            background: conic-gradient(var(--primary) var(--progress), var(--muted) 0deg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .radial-progress::before {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            background-color: var(--surface);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-foreground min-h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-surface border-r border-border flex flex-col hidden md:flex z-40 h-screen">
+        <div class="h-20 flex items-center px-8 border-b border-border shrink-0">
+            <div class="flex items-center gap-3">
+                <img src="mora.png" alt="Mora" class="w-8 h-8 object-contain">
+                <h1 class="text-2xl text-primary font-medium tracking-tighter text-[#1e1e4b]">Mora</h1>
+            </div>
+        </div>
+        
+        <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-5 custom-scrollbar" id="sidebarNav">
+            <a href="#" class="w-full flex items-center gap-3 px-4 bg-primary/10 text-primary rounded-xl font-medium transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                Dashboard
+            </a>
+            <button onclick="openModal('modalSiswa')" class="w-full flex items-center gap-3 px-4 text-muted-foreground hover:bg-primary/5 hover:text-primary rounded-xl font-medium transition-all cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                Data Siswa
+            </button>
+            <button onclick="openModal('modalGuru')" class="w-full flex items-center gap-3 px-4 text-muted-foreground hover:bg-primary/5 hover:text-primary rounded-xl font-medium transition-all cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                Data Guru
+            </button>
+            <button onclick="openModal('modalStatistik')" class="w-full flex items-center gap-3 px-4 text-muted-foreground hover:bg-primary/5 hover:text-primary rounded-xl font-medium transition-all cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                Statistik Poin
+            </button>
+            <button onclick="openModal('modalJadwal')" class="w-full flex items-center gap-3 px-4 text-muted-foreground hover:bg-primary/5 hover:text-primary rounded-xl font-medium transition-all cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                Jadwal Agenda
+            </button>
+            <button onclick="openModal('modalPengaturan')" class="w-full flex items-center gap-3 px-4 text-muted-foreground hover:bg-primary/5 hover:text-primary rounded-xl font-medium transition-all cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                Pengaturan
+            </button>
+        </nav>
+
+        <div class="p-4 border-t border-border flex flex-col gap-4 shrink-0 bg-surface">
+            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-destructive hover:bg-destructive/10 rounded-xl font-medium transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                Logout
+            </a>
+            <div class="flex items-center gap-3 px-3 py-2 border border-border rounded-xl bg-muted/10 hover:bg-muted/30 cursor-pointer transition">
+                <img src="https://ui-avatars.com/api/?name=Aoddi+Pechokov&background=1447e6&color=fff" alt="Admin" class="w-10 h-10 rounded-full shadow-sm">
+                <div>
+                    <p class="font-bold text-foreground text-sm leading-tight">Aoddi Pechokov</p>
+                    <p class="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold">Admin Sekolah</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-background relative z-10">
+        
+        <header class="h-20 bg-surface border-b border-border flex items-center justify-between px-8 shrink-0">
+            <div class="relative w-96 group">
+                <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <input type="text" placeholder="Cari laporan cepat, aktivitas, atau jadwal..." class="w-full bg-muted/30 border border-border rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-surface transition-all text-sm">
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+            <div class="max-w-7xl mx-auto space-y-6">
+                <h3 class="text-2xl font-medium">
+                    Selamat datang kembali, <span class="text-primary">Aoddi Pechokov</span>
+                </h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-surface p-5 rounded-3xl border border-border shadow-sm flex items-center gap-4 hover:-translate-y-1 transition duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-info/10 text-info flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        </div>
+                        <div><p class="text-sm text-muted-foreground font-medium">Total Siswa</p><h3 class="text-2xl font-bold">267</h3></div>
+                    </div>
+                    <div class="bg-surface p-5 rounded-3xl border border-border shadow-sm flex items-center gap-4 hover:-translate-y-1 transition duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-warning/10 text-warning flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div><p class="text-sm text-muted-foreground font-medium">Total Guru</p><h3 class="text-2xl font-bold">22</h3></div>
+                    </div>
+                    <div class="bg-surface p-5 rounded-3xl border border-border shadow-sm flex items-center gap-4 hover:-translate-y-1 transition duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-success/10 text-success flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        <div><p class="text-sm text-muted-foreground font-medium">Total Poin</p><h3 class="text-2xl font-bold">6.643 <span class="text-xs text-success font-normal">▲ 13%</span></h3></div>
+                    </div>
+                </div>
+
+                <div class="bg-surface p-8 rounded-3xl border border-border shadow-sm">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <h3 class="text-2xl font-semibold">Leaderboard Kelas</h3>
+                            <p class="text-sm text-muted-foreground">Perkembangan karakter dan kedisiplinan 9 kelas secara komparatif.</p>
+                        </div>
+                        <button class="text-sm border border-border px-4 py-2 rounded-xl flex items-center gap-2 hover:bg-muted/30 font-medium">
+                            Bulan Ini <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                    </div>
+                    
+                    <div class="overflow-x-auto custom-scrollbar pb-4">
+                        <div class="flex h-64 relative mt-2 w-full min-w-[700px]">
+                            <div class="w-12 flex flex-col justify-between text-xs font-semibold text-muted-foreground pb-8 sticky left-0 bg-surface z-10">
+                                <span>400</span><span>300</span><span>200</span><span>100</span><span>0</span>
+                            </div>
+                            
+                            <div class="flex-1 flex justify-around items-end pb-8 border-b-2 border-border/50 px-4">
+                                <div class="w-8 h-full relative flex items-end group">
+                                    <div class="w-full bg-primary/10 h-full absolute rounded-t-md"></div>
+                                    <div class="w-full bg-primary rounded-t-md h-[30%] z-10 hover:brightness-110 transition cursor-pointer"></div>
+                                    <span class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-xs font-semibold text-muted-foreground whitespace-nowrap">X-1</span>
+                                </div>
+                                <div class="w-8 h-full relative flex items-end group">
+                                    <div class="w-full bg-primary/10 h-full absolute rounded-t-md"></div>
+                                    <div class="w-full bg-primary rounded-t-md h-[40%] z-10 hover:brightness-110 transition cursor-pointer"></div>
+                                    <span class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-xs font-semibold text-muted-foreground whitespace-nowrap">X-2</span>
+                                </div>
+                                <div class="w-8 h-full relative flex items-end group">
+                                    <div class="w-full bg-primary/10 h-full absolute rounded-t-md"></div>
+                                    <div class="w-full bg-primary rounded-t-md h-[35%] z-10 hover:brightness-110 transition cursor-pointer"></div>
+                                    <span class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-xs font-semibold text-muted-foreground whitespace-nowrap">X-3</span>
+                                </div>
+                                <div class="w-8 h-full relative flex items-end group">
+                                    <div class="w-full bg-primary/10 h-full absolute rounded-t-md"></div>
+                                    <div class="w-full bg-primary rounded-t-md h-[65%] z-10 hover:brightness-110 transition cursor-pointer"></div>
+                                    <span class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-xs font-semibold text-muted-foreground whitespace-nowrap">XI-1</span>
+                                </div>
+                                <div class="w-8 h-full relative flex items-end group">
+                                    <div class="w-full bg-primary/10 h-full absolute rounded-t-md"></div>
+                                    <div class="w-full bg-primary rounded-t-md h-[50%] z-10 hover:brightness-110 transition cursor-pointer"></div>
+                                    <span class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-xs font-semibold text-muted-foreground whitespace-nowrap">XI-2</span>
+                                </div>
+                                <div class="w-8 h-full relative flex items-end group">
+                                    <div class="w-full bg-primary/10 h-full absolute rounded-t-md"></div>
+                                    <div class="w-full bg-primary rounded-t-md h-[55%] z-10 hover:brightness-110 transition cursor-pointer"></div>
+                                    <span class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-xs font-semibold text-muted-foreground whitespace-nowrap">XI-3</span>
+                                </div>
+                                <div class="w-8 h-full relative flex items-end group">
+                                    <div class="w-full bg-primary/10 h-full absolute rounded-t-md"></div>
+                                    <div class="w-full bg-primary rounded-t-md h-[90%] z-10 shadow-[0_0_15px_var(--primary)] hover:brightness-110 transition cursor-pointer"></div>
+                                    <span class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-xs font-black text-primary whitespace-nowrap">XII-1</span>
+                                </div>
+                                <div class="w-8 h-full relative flex items-end group">
+                                    <div class="w-full bg-primary/10 h-full absolute rounded-t-md"></div>
+                                    <div class="w-full bg-primary rounded-t-md h-[75%] z-10 hover:brightness-110 transition cursor-pointer"></div>
+                                    <span class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-xs font-semibold text-muted-foreground whitespace-nowrap">XII-2</span>
+                                </div>
+                                <div class="w-8 h-full relative flex items-end group">
+                                    <div class="w-full bg-primary/10 h-full absolute rounded-t-md"></div>
+                                    <div class="w-full bg-primary rounded-t-md h-[68%] z-10 hover:brightness-110 transition cursor-pointer"></div>
+                                    <span class="absolute -bottom-7 left-1/2 -translate-x-1/2 text-xs font-semibold text-muted-foreground whitespace-nowrap">XII-3</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    
+                    <div class="lg:col-span-2 space-y-8">
+                        
+                        <div class="bg-surface rounded-3xl border border-border shadow-sm flex flex-col overflow-hidden">
+                            <div class="p-6 flex justify-between items-center bg-surface border-b border-border">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <h3 class="text-xl font-semibold card-title-blue">Riwayat Aktivitas</h3>
+                                </div>
+                                <select id="filterRiwayat" onchange="applyFilter()" class="bg-muted/20 border border-border text-sm font-medium rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer">
+                                    <option value="semua">Semua Waktu</option>
+                                    <option value="hari-ini">Hari Ini</option>
+                                    <option value="kemarin">Kemarin</option>
+                                    <option value="minggu-ini">Minggu Ini</option>
+                                </select>
+                            </div>
+                            
+                            <div class="grid grid-cols-3 text-muted-foreground py-3 px-6 text-sm font-semibold border-b border-border">
+                                <div class="text-center md:text-left md:pl-8">Nama Siswa</div>
+                                <div class="text-center">Indikator</div>
+                                <div class="text-center md:text-right md:pr-8">Waktu</div>
+                            </div>
+                            
+                            <div id="listRiwayat" class="divide-y divide-border">
+                                <div class="riwayat-item grid grid-cols-3 items-center py-4 px-6 hover:bg-muted/10 transition" data-waktu="hari-ini">
+                                    <div class="flex items-center gap-4 justify-center md:justify-start">
+                                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">AS</div>
+                                        <div class="text-left hidden md:block">
+                                            <p class="font-bold text-sm text-[#1e1e4b]">Aliy S.</p>
+                                            <p class="text-[11px] text-muted-foreground">XI RPL</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-1">
+                                        <span class="text-xs font-medium text-muted-foreground">Rapih / Lingkungan</span>
+                                        <span class="bg-success/20 text-success px-3 py-1 rounded-full text-[10px] font-bold">&uarr; +50 Pts</span>
+                                    </div>
+                                    <div class="text-center md:text-right text-xs text-muted-foreground">
+                                        <p class="font-semibold text-foreground">Hari Ini</p>
+                                        <p>07:35 WIB</p>
+                                    </div>
+                                </div>
+                                <div class="riwayat-item grid grid-cols-3 items-center py-4 px-6 hover:bg-muted/10 transition" data-waktu="hari-ini">
+                                    <div class="flex items-center gap-4 justify-center md:justify-start">
+                                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">HZ</div>
+                                        <div class="text-left hidden md:block">
+                                            <p class="font-bold text-sm text-[#1e1e4b]">Hazle M.</p>
+                                            <p class="text-[11px] text-muted-foreground">XII RPL 1</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-1">
+                                        <span class="text-xs font-medium text-muted-foreground">Empati</span>
+                                        <span class="bg-success/20 text-success px-3 py-1 rounded-full text-[10px] font-bold">&uarr; +25 Pts</span>
+                                    </div>
+                                    <div class="text-center md:text-right text-xs text-muted-foreground">
+                                        <p class="font-semibold text-foreground">Hari Ini</p>
+                                        <p>10:15 WIB</p>
+                                    </div>
+                                </div>
+                                <div class="riwayat-item grid grid-cols-3 items-center py-4 px-6 hover:bg-muted/10 transition" data-waktu="kemarin">
+                                    <div class="flex items-center gap-4 justify-center md:justify-start">
+                                        <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-sm shrink-0">SA</div>
+                                        <div class="text-left hidden md:block">
+                                            <p class="font-bold text-sm text-[#1e1e4b]">Shabira A.</p>
+                                            <p class="text-[11px] text-muted-foreground">X DKV</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-1">
+                                        <span class="text-xs font-medium text-muted-foreground">Kedisiplinan</span>
+                                        <span class="bg-destructive/10 text-destructive px-3 py-1 rounded-full text-[10px] font-bold">&darr; -25 Pts</span>
+                                    </div>
+                                    <div class="text-center md:text-right text-xs text-muted-foreground">
+                                        <p class="font-semibold text-foreground">Kemarin</p>
+                                        <p>14:15 WIB</p>
+                                    </div>
+                                </div>
+                                <div class="riwayat-item grid grid-cols-3 items-center py-4 px-6 hover:bg-muted/10 transition" data-waktu="minggu-ini">
+                                    <div class="flex items-center gap-4 justify-center md:justify-start">
+                                        <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-sm shrink-0">AX</div>
+                                        <div class="text-left hidden md:block">
+                                            <p class="font-bold text-sm text-[#1e1e4b]">Axka H.</p>
+                                            <p class="text-[11px] text-muted-foreground">XI RPL</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-1">
+                                        <span class="text-xs font-medium text-muted-foreground">Philanthropy</span>
+                                        <span class="bg-success/20 text-success px-3 py-1 rounded-full text-[10px] font-bold">&uarr; +100 Pts</span>
+                                    </div>
+                                    <div class="text-center md:text-right text-xs text-muted-foreground">
+                                        <p class="font-semibold text-foreground">08 Mei 2026</p>
+                                        <p>08:00 WIB</p>
+                                    </div>
+                                </div>
+                                <div class="riwayat-item grid grid-cols-3 items-center py-4 px-6 hover:bg-muted/10 transition" data-waktu="minggu-ini">
+                                    <div class="flex items-center gap-4 justify-center md:justify-start">
+                                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">BP</div>
+                                        <div class="text-left hidden md:block">
+                                            <p class="font-bold text-sm text-[#1e1e4b]">Bintang P.</p>
+                                            <p class="text-[11px] text-muted-foreground">XI RPL</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-1">
+                                        <span class="text-xs font-medium text-muted-foreground">Bantu Guru</span>
+                                        <span class="bg-success/20 text-success px-3 py-1 rounded-full text-[10px] font-bold">&uarr; +15 Pts</span>
+                                    </div>
+                                    <div class="text-center md:text-right text-xs text-muted-foreground">
+                                        <p class="font-semibold text-foreground">07 Mei 2026</p>
+                                        <p>13:20 WIB</p>
+                                    </div>
+                                </div>
+                                <div class="riwayat-item grid grid-cols-3 items-center py-4 px-6 hover:bg-muted/10 transition" data-waktu="minggu-ini">
+                                    <div class="flex items-center gap-4 justify-center md:justify-start">
+                                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">FQ</div>
+                                        <div class="text-left hidden md:block">
+                                            <p class="font-bold text-sm text-[#1e1e4b]">Faqih A.</p>
+                                            <p class="text-[11px] text-muted-foreground">XI DKV</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-1">
+                                        <span class="text-xs font-medium text-muted-foreground">Inisiatif</span>
+                                        <span class="bg-success/20 text-success px-3 py-1 rounded-full text-[10px] font-bold">&uarr; +10 Pts</span>
+                                    </div>
+                                    <div class="text-center md:text-right text-xs text-muted-foreground">
+                                        <p class="font-semibold text-foreground">06 Mei 2026</p>
+                                        <p>09:10 WIB</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="emptyState" class="hidden text-center py-8">
+                                <p class="text-muted-foreground text-sm">Tidak ada aktivitas pada periode ini.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-surface rounded-3xl border border-border shadow-sm p-6">
+                            <div class="flex justify-between items-center mb-5">
+                                <h3 class="text-lg font-semibold card-title-blue">Agenda Mendatang</h3>
+                                <button class="text-xs font-semibold text-primary hover:underline flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                    Edit Agenda
+                                </button>
+                            </div>
+                            <div class="flex gap-4 overflow-x-auto custom-scrollbar pb-2">
+                                <div class="min-w-[250px] p-4 rounded-2xl border border-border bg-muted/10 hover:border-primary/40 transition cursor-pointer">
+                                    <p class="text-xs font-bold text-primary mb-1">16 Mei 2026</p>
+                                    <p class="font-bold text-[#1e1e4b] text-sm">Lomba NUCLEARS 2026</p>
+                                    <p class="text-xs text-muted-foreground mt-1">Sesi latihan pidato bersama guru pembimbing.</p>
+                                </div>
+                                <div class="min-w-[250px] p-4 rounded-2xl border border-border bg-muted/10 hover:border-warning/40 transition cursor-pointer">
+                                    <p class="text-xs font-bold text-warning mb-1">20 Mei 2026</p>
+                                    <p class="font-bold text-[#1e1e4b] text-sm">Rapat Pleno Poin</p>
+                                    <p class="text-xs text-muted-foreground mt-1">Evaluasi kedisiplinan dan poin karakter.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-surface p-6 rounded-3xl border border-border shadow-sm flex flex-col h-full max-h-[600px]">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-lg font-semibold card-title-blue">Otorisasi Guru</h3>
+                                    <p class="text-xs text-muted-foreground mt-1">Pilih profil untuk memindai QR</p>
+                                </div>
+                                <button class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition text-lg">+</button>
+                            </div>
+                            
+                            <input type="text" placeholder="Scan/Cari kode unik..." class="w-full mb-4 bg-muted/20 border border-border rounded-lg py-3 px-4 text-sm focus:outline-none focus:border-primary transition">
+
+                            <div class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+                                <div class="flex items-center justify-between p-3 hover:bg-muted/20 rounded-2xl transition cursor-pointer border border-border bg-background shadow-sm">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">BS</div>
+                                        <div><p class="text-sm font-bold text-[#1e1e4b] leading-tight">Pak Budi S.</p><p class="text-[10px] text-muted-foreground font-mono mt-0.5">GUR-001</p></div>
+                                    </div>
+                                    <button class="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-lg font-bold hover:bg-primary hover:text-white transition">Pilih</button>
+                                </div>
+                                <div class="flex items-center justify-between p-3 hover:bg-muted/20 rounded-2xl transition cursor-pointer border border-border bg-background shadow-sm">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-warning/10 text-warning flex items-center justify-center font-bold text-sm">SA</div>
+                                        <div><p class="text-sm font-bold text-[#1e1e4b] leading-tight">Bu Siti A.</p><p class="text-[10px] text-muted-foreground font-mono mt-0.5">GUR-002</p></div>
+                                    </div>
+                                    <button class="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-lg font-bold hover:bg-primary hover:text-white transition">Pilih</button>
+                                </div>
+                                <div class="flex items-center justify-between p-3 hover:bg-muted/20 rounded-2xl transition cursor-pointer border border-border bg-background shadow-sm">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-success/10 text-success flex items-center justify-center font-bold text-sm">DK</div>
+                                        <div><p class="text-sm font-bold text-[#1e1e4b] leading-tight">Pak Dedi K.</p><p class="text-[10px] text-muted-foreground font-mono mt-0.5">GUR-003</p></div>
+                                    </div>
+                                    <button class="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-lg font-bold hover:bg-primary hover:text-white transition">Pilih</button>
+                                </div>
+                                <div class="flex items-center justify-between p-3 hover:bg-muted/20 rounded-2xl transition cursor-pointer border border-border bg-background shadow-sm">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-destructive/10 text-destructive flex items-center justify-center font-bold text-sm">RM</div>
+                                        <div><p class="text-sm font-bold text-[#1e1e4b] leading-tight">Bu Rina M.</p><p class="text-[10px] text-muted-foreground font-mono mt-0.5">GUR-004</p></div>
+                                    </div>
+                                    <button class="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-lg font-bold hover:bg-primary hover:text-white transition">Pilih</button>
+                                </div>
+                                <div class="text-center pt-2">
+                                    <span class="text-[10px] text-muted-foreground italic font-semibold">+ 18 Guru lainnya siap bertugas</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modalSiswa" class="hidden modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div class="bg-surface w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] m-4 border border-border">
+            <div class="p-6 border-b border-border flex justify-between items-center bg-background shrink-0">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-info/10 text-info rounded-2xl flex items-center justify-center"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg></div>
+                    <div>
+                        <h2 class="text-2xl font-bold tracking-tight text-[#1e1e4b]">Direktori Siswa</h2>
+                        <p class="text-xs text-muted-foreground">Menampilkan data <span class="text-primary font-bold">267 Siswa</span> terdaftar.</p>
+                    </div>
+                </div>
+                <button onclick="closeModal('modalSiswa')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-destructive/10 hover:text-destructive transition text-muted-foreground"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            
+            <div class="p-4 bg-muted/10 border-b border-border shrink-0 flex flex-wrap gap-4">
+                <input type="text" id="searchSiswa" onkeyup="filterSiswa()" placeholder="Cari nama atau NIS..." class="flex-1 min-w-[200px] bg-surface border border-border rounded-xl py-2.5 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition">
+                <select id="filterKelas" onchange="filterSiswa()" class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 font-medium cursor-pointer text-muted-foreground">
+                    <option value="semua">Semua Kelas</option>
+                    <option value="X">Kelas X</option>
+                    <option value="XI">Kelas XI</option>
+                    <option value="XII">Kelas XII</option>
+                </select>
+                <select id="filterJurusan" onchange="filterSiswa()" class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 font-medium cursor-pointer text-muted-foreground">
+                    <option value="semua">Semua Jurusan</option>
+                    <option value="RPL">RPL</option>
+                    <option value="DKV">DKV</option>
+                    <option value="TKJ">TKJ</option>
+                </select>
+            </div>
+            
+            <div class="p-6 overflow-y-auto space-y-3 custom-scrollbar flex-1 bg-background" id="listSiswaModal">
+                <div class="search-item flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-primary/40 hover:shadow-md transition duration-300" data-kelas="XI" data-jurusan="RPL">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">AX</div>
+                        <div><p class="font-bold text-sm text-[#1e1e4b] search-name">Axka Hirda Kiryawan</p><p class="text-[11px] text-muted-foreground uppercase tracking-wider mt-0.5"><span class="text-primary font-semibold">10112</span> • XI RPL</p></div>
+                    </div>
+                    <button class="text-xs bg-primary text-white font-bold px-4 py-2 rounded-xl hover:bg-primary/90 transition shadow-sm">Lihat Profil</button>
+                </div>
+                <div class="search-item flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-primary/40 hover:shadow-md transition duration-300" data-kelas="XI" data-jurusan="RPL">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">BP</div>
+                        <div><p class="font-bold text-sm text-[#1e1e4b] search-name">Bintang Pratama</p><p class="text-[11px] text-muted-foreground uppercase tracking-wider mt-0.5"><span class="text-primary font-semibold">10113</span> • XI RPL</p></div>
+                    </div>
+                    <button class="text-xs bg-primary text-white font-bold px-4 py-2 rounded-xl hover:bg-primary/90 transition shadow-sm">Lihat Profil</button>
+                </div>
+                <div class="search-item flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-primary/40 hover:shadow-md transition duration-300" data-kelas="XI" data-jurusan="RPL">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">GA</div>
+                        <div><p class="font-bold text-sm text-[#1e1e4b] search-name">Ghazam Ali Ravandy</p><p class="text-[11px] text-muted-foreground uppercase tracking-wider mt-0.5"><span class="text-primary font-semibold">10114</span> • XI RPL</p></div>
+                    </div>
+                    <button class="text-xs bg-primary text-white font-bold px-4 py-2 rounded-xl hover:bg-primary/90 transition shadow-sm">Lihat Profil</button>
+                </div>
+                <div class="search-item flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-primary/40 hover:shadow-md transition duration-300" data-kelas="XI" data-jurusan="DKV">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-sm shrink-0">FQ</div>
+                        <div><p class="font-bold text-sm text-[#1e1e4b] search-name">Faqih Abdul Nali</p><p class="text-[11px] text-muted-foreground uppercase tracking-wider mt-0.5"><span class="text-primary font-semibold">10201</span> • XI DKV</p></div>
+                    </div>
+                    <button class="text-xs bg-primary text-white font-bold px-4 py-2 rounded-xl hover:bg-primary/90 transition shadow-sm">Lihat Profil</button>
+                </div>
+                <div class="search-item flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-primary/40 hover:shadow-md transition duration-300" data-kelas="X" data-jurusan="DKV">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-sm shrink-0">SA</div>
+                        <div><p class="font-bold text-sm text-[#1e1e4b] search-name">Shabira Annisa</p><p class="text-[11px] text-muted-foreground uppercase tracking-wider mt-0.5"><span class="text-primary font-semibold">11005</span> • X DKV</p></div>
+                    </div>
+                    <button class="text-xs bg-primary text-white font-bold px-4 py-2 rounded-xl hover:bg-primary/90 transition shadow-sm">Lihat Profil</button>
+                </div>
+                <div class="search-item flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-primary/40 hover:shadow-md transition duration-300" data-kelas="XII" data-jurusan="RPL">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">HM</div>
+                        <div><p class="font-bold text-sm text-[#1e1e4b] search-name">Hazle Muhammad</p><p class="text-[11px] text-muted-foreground uppercase tracking-wider mt-0.5"><span class="text-primary font-semibold">09022</span> • XII RPL</p></div>
+                    </div>
+                    <button class="text-xs bg-primary text-white font-bold px-4 py-2 rounded-xl hover:bg-primary/90 transition shadow-sm">Lihat Profil</button>
+                </div>
+                <div class="search-item flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-primary/40 hover:shadow-md transition duration-300" data-kelas="XI" data-jurusan="RPL">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0">AS</div>
+                        <div><p class="font-bold text-sm text-[#1e1e4b] search-name">Aliy Syahputra</p><p class="text-[11px] text-muted-foreground uppercase tracking-wider mt-0.5"><span class="text-primary font-semibold">11045</span> • XI RPL</p></div>
+                    </div>
+                    <button class="text-xs bg-primary text-white font-bold px-4 py-2 rounded-xl hover:bg-primary/90 transition shadow-sm">Lihat Profil</button>
+                </div>
+                
+                <p id="emptyStateSiswa" class="hidden text-center text-sm text-muted-foreground italic py-8">Siswa dengan kriteria tersebut tidak ditemukan.</p>
+                
+                <p class="text-center text-xs text-muted-foreground italic font-semibold py-4">Lihat +260 siswa lainnya...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalGuru" class="hidden modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div class="bg-surface w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] m-4 border border-border">
+            <div class="p-6 border-b border-border flex justify-between items-center bg-background shrink-0">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-warning/10 text-warning rounded-2xl flex items-center justify-center"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div>
+                    <div><h2 class="text-2xl font-bold tracking-tight text-[#1e1e4b]">Direktori Guru</h2><p class="text-xs text-muted-foreground">Data <span class="text-warning font-bold">22 Guru</span> pengajar aktif.</p></div>
+                </div>
+                <button onclick="closeModal('modalGuru')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-destructive/10 hover:text-destructive transition text-muted-foreground"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            <div class="p-4 bg-muted/10 border-b border-border shrink-0 flex gap-4">
+                <input type="text" id="searchGuru" onkeyup="filterList('searchGuru', 'listGuruModal')" placeholder="Cari nama guru atau kode unik..." class="flex-1 bg-surface border border-border rounded-xl py-2.5 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-warning/40 transition">
+            </div>
+            <div class="p-6 overflow-y-auto space-y-3 custom-scrollbar flex-1 bg-background" id="listGuruModal">
+                <div class="search-item flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-warning/40 hover:shadow-md transition duration-300">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-warning/10 text-warning flex items-center justify-center font-bold text-sm shrink-0">PS</div>
+                        <div><p class="font-bold text-sm text-[#1e1e4b] search-name">Padhang Satrio, M.Kom</p><p class="text-[11px] text-muted-foreground uppercase tracking-wider mt-0.5"><span class="font-mono text-warning font-bold bg-warning/10 px-1 rounded">GUR-001</span> • Kepala Prog. RPL</p></div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                         <span class="bg-success/10 text-success text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-success"></span> Aktif</span>
+                         <button class="text-xs bg-muted/40 hover:bg-muted text-foreground font-bold px-4 py-2 rounded-xl transition">Kelola</button>
+                    </div>
+                </div>
+                <div class="search-item flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-warning/40 hover:shadow-md transition duration-300">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-warning/10 text-warning flex items-center justify-center font-bold text-sm shrink-0">ZH</div>
+                        <div><p class="font-bold text-sm text-[#1e1e4b] search-name">Zakir Horizontal, S.T</p><p class="text-[11px] text-muted-foreground uppercase tracking-wider mt-0.5"><span class="font-mono text-warning font-bold bg-warning/10 px-1 rounded">GUR-002</span> • Produktif RPL</p></div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                         <span class="bg-success/10 text-success text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-success"></span> Aktif</span>
+                         <button class="text-xs bg-muted/40 hover:bg-muted text-foreground font-bold px-4 py-2 rounded-xl transition">Kelola</button>
+                    </div>
+                </div>
+                <div class="search-item flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-warning/40 hover:shadow-md transition duration-300">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-warning/10 text-warning flex items-center justify-center font-bold text-sm shrink-0">SA</div>
+                        <div><p class="font-bold text-sm text-[#1e1e4b] search-name">Siti Aminah, M.Pd</p><p class="text-[11px] text-muted-foreground uppercase tracking-wider mt-0.5"><span class="font-mono text-warning font-bold bg-warning/10 px-1 rounded">GUR-005</span> • Bahasa Inggris</p></div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                         <span class="bg-muted text-muted-foreground text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-muted-foreground"></span> Cuti</span>
+                         <button class="text-xs bg-muted/40 hover:bg-muted text-foreground font-bold px-4 py-2 rounded-xl transition">Kelola</button>
+                    </div>
+                </div>
+                
+                <p class="text-center text-xs text-muted-foreground italic font-semibold py-4">Lihat +19 guru lainnya...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalStatistik" class="hidden modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div class="bg-surface w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col m-4 border border-border">
+            <div class="p-6 border-b border-border flex justify-between items-center bg-background shrink-0">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-success/10 text-success rounded-2xl flex items-center justify-center"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg></div>
+                    <div><h2 class="text-2xl font-bold tracking-tight text-[#1e1e4b]">Statistik & Laporan</h2><p class="text-xs text-muted-foreground">Analisis akumulasi poin kebaikan bulan ini.</p></div>
+                </div>
+                <button onclick="closeModal('modalStatistik')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-destructive/10 hover:text-destructive transition text-muted-foreground"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            <div class="p-8 bg-background flex flex-col md:flex-row gap-8 items-center">
+                <div class="w-48 h-48 relative flex items-center justify-center radial-progress shadow-inner" style="--progress: 75%;">
+                    <div class="absolute z-10 flex flex-col items-center">
+                        <span class="text-4xl font-black text-primary">75%</span>
+                        <span class="text-xs text-muted-foreground font-semibold mt-1">Target Karakter</span>
+                    </div>
+                </div>
+                <div class="flex-1 space-y-4 w-full">
+                    <div class="bg-surface p-4 border border-border rounded-2xl flex justify-between items-center shadow-sm">
+                        <div><p class="text-xs text-muted-foreground uppercase font-bold tracking-wider">Total Poin Positif</p><p class="text-xl font-black text-success">8,420 <span class="text-[10px] bg-success/20 px-2 py-0.5 rounded-full ml-1">&uarr; Naik</span></p></div>
+                        <svg class="w-8 h-8 text-success/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    </div>
+                    <div class="bg-surface p-4 border border-border rounded-2xl flex justify-between items-center shadow-sm">
+                        <div><p class="text-xs text-muted-foreground uppercase font-bold tracking-wider">Total Pelanggaran</p><p class="text-xl font-black text-destructive">1,777 <span class="text-[10px] bg-destructive/20 px-2 py-0.5 rounded-full ml-1">&darr; Turun</span></p></div>
+                        <svg class="w-8 h-8 text-destructive/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalJadwal" class="hidden modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div class="bg-surface w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] m-4 border border-border">
+            <div class="p-6 border-b border-border flex justify-between items-center bg-background shrink-0">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-accent/10 text-accent rounded-2xl flex items-center justify-center"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
+                    <div><h2 class="text-2xl font-bold tracking-tight text-[#1e1e4b]">Jadwal Agenda Sekolah</h2><p class="text-xs text-muted-foreground">Timeline acara dan kalender akademik.</p></div>
+                </div>
+                <button onclick="closeModal('modalJadwal')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-destructive/10 hover:text-destructive transition text-muted-foreground"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-6 custom-scrollbar bg-background">
+                <div class="relative border-l-2 border-primary/20 ml-3 space-y-6">
+                    <div class="relative pl-6">
+                        <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-background"></span>
+                        <p class="text-xs font-bold text-primary mb-1">16 Mei 2026</p>
+                        <div class="bg-surface border border-border p-4 rounded-2xl shadow-sm"><p class="font-bold text-[#1e1e4b]">Lomba NUCLEARS 2026</p><p class="text-sm text-muted-foreground mt-1">Acara speech contest di UIKA Bogor. Jangan lupa absen peserta didik yang mewakili.</p></div>
+                    </div>
+                    <div class="relative pl-6">
+                        <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-warning ring-4 ring-background"></span>
+                        <p class="text-xs font-bold text-warning mb-1">20 Mei 2026</p>
+                        <div class="bg-surface border border-border p-4 rounded-2xl shadow-sm"><p class="font-bold text-[#1e1e4b]">Rapat Pleno Poin Siswa</p><p class="text-sm text-muted-foreground mt-1">Evaluasi kedisiplinan dan poin karakter bersama wali kelas dan guru BK.</p></div>
+                    </div>
+                    <div class="relative pl-6 opacity-60 hover:opacity-100 transition">
+                        <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-muted-foreground ring-4 ring-background"></span>
+                        <p class="text-xs font-bold text-muted-foreground mb-1">10 Juni 2026</p>
+                        <div class="bg-surface border border-border p-4 rounded-2xl shadow-sm"><p class="font-bold text-[#1e1e4b]">Ujian Akhir Semester</p><p class="text-sm text-muted-foreground mt-1">Periode kunci aplikasi monitoring akan dihentikan sementara selama UAS.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalPengaturan" class="hidden modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div class="bg-surface w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col m-4 border border-border">
+            <div class="p-6 border-b border-border flex justify-between items-center bg-background shrink-0">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-muted/20 text-foreground rounded-2xl flex items-center justify-center"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
+                    <div><h2 class="text-2xl font-bold tracking-tight text-[#1e1e4b]">Pengaturan Akun</h2><p class="text-xs text-muted-foreground">Konfigurasi admin Aoddi Pechokov.</p></div>
+                </div>
+                <button onclick="closeModal('modalPengaturan')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-destructive/10 hover:text-destructive transition text-muted-foreground"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            <div class="p-8 bg-background space-y-6">
+                <div class="space-y-4 bg-surface p-5 border border-border rounded-2xl shadow-sm">
+                    <div class="flex justify-between items-center">
+                        <div><p class="font-bold text-sm text-[#1e1e4b]">Notifikasi Real-time</p><p class="text-xs text-muted-foreground">Terima alert pop-up saat siswa di-scan.</p></div>
+                        <div onclick="this.querySelector('.toggle-dot').classList.toggle('translate-x-5'); this.classList.toggle('bg-primary'); this.classList.toggle('bg-muted');" class="w-11 h-6 bg-primary rounded-full cursor-pointer transition-colors duration-300 relative">
+                            <div class="toggle-dot w-4 h-4 bg-white rounded-full absolute top-1 left-1 translate-x-5 transition-transform duration-300 shadow-md"></div>
+                        </div>
+                    </div>
+                    <div class="h-px bg-border w-full"></div>
+                    <div class="flex justify-between items-center">
+                        <div><p class="font-bold text-sm text-[#1e1e4b]">Laporan Email Harian</p><p class="text-xs text-muted-foreground">Kirim rekap poin harian ke email admin.</p></div>
+                        <div onclick="this.querySelector('.toggle-dot').classList.toggle('translate-x-5'); this.classList.toggle('bg-primary'); this.classList.toggle('bg-muted');" class="w-11 h-6 bg-muted rounded-full cursor-pointer transition-colors duration-300 relative">
+                            <div class="toggle-dot w-4 h-4 bg-white rounded-full absolute top-1 left-1 transition-transform duration-300 shadow-md"></div>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="closeModal('modalPengaturan')" class="w-full bg-primary text-white py-3 rounded-xl font-bold shadow-md hover:bg-primary/90 transition">Simpan Pengaturan</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Logika Popup Simpel Anti Hilang
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+        
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // Live Search + Filter Dropdown (Kelas & Jurusan) untuk Modal Siswa
+        function filterSiswa() {
+            const searchInput = document.getElementById('searchSiswa').value.toLowerCase();
+            const kelasInput = document.getElementById('filterKelas').value;
+            const jurusanInput = document.getElementById('filterJurusan').value;
+            
+            const listContainer = document.getElementById('listSiswaModal');
+            const items = listContainer.getElementsByClassName('search-item');
+            const emptyState = document.getElementById('emptyStateSiswa');
+            let visibleCount = 0;
+
+            for (let i = 0; i < items.length; i++) {
+                let name = items[i].querySelector('.search-name').textContent.toLowerCase();
+                let itemKelas = items[i].getAttribute('data-kelas');
+                let itemJurusan = items[i].getAttribute('data-jurusan');
+                
+                let matchSearch = name.includes(searchInput);
+                let matchKelas = (kelasInput === 'semua' || itemKelas === kelasInput);
+                let matchJurusan = (jurusanInput === 'semua' || itemJurusan === jurusanInput);
+                
+                if (matchSearch && matchKelas && matchJurusan) {
+                    items[i].style.display = ""; 
+                    visibleCount++;
+                } else {
+                    items[i].style.display = "none"; 
+                }
+            }
+            
+            if(visibleCount === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+        }
+
+        // Live Search Biasa untuk Modal Guru
+        function filterList(inputId, listId) {
+            const input = document.getElementById(inputId).value.toLowerCase();
+            const listContainer = document.getElementById(listId);
+            const items = listContainer.getElementsByClassName('search-item');
+
+            for (let i = 0; i < items.length; i++) {
+                let name = items[i].querySelector('.search-name').textContent.toLowerCase();
+                if (name.includes(input)) {
+                    items[i].style.display = ""; 
+                } else {
+                    items[i].style.display = "none"; 
+                }
+            }
+        }
+
+        // Filter Dropdown Riwayat Dashboard Utama
+        function applyFilter() {
+            const filterValue = document.getElementById('filterRiwayat').value;
+            const items = document.querySelectorAll('.riwayat-item');
+            const emptyState = document.getElementById('emptyState');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const itemWaktu = item.getAttribute('data-waktu');
+                
+                if (filterValue === 'semua') {
+                    item.style.display = 'grid'; 
+                    visibleCount++;
+                } else if (filterValue === 'minggu-ini') {
+                    if (itemWaktu === 'hari-ini' || itemWaktu === 'kemarin' || itemWaktu === 'minggu-ini') {
+                        item.style.display = 'grid';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                } else {
+                    if (itemWaktu === filterValue) {
+                        item.style.display = 'grid';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+
+            if (visibleCount === 0) {
+                emptyState.classList.remove('hidden');
+                document.getElementById('listRiwayat').classList.add('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                document.getElementById('listRiwayat').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
