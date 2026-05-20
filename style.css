@@ -60,6 +60,11 @@ body {
   background-position: -5px -5px;
 }
 
+.pattern-grid {
+  background-image: linear-gradient(#e4ebff 4px, transparent 4px), linear-gradient(to right, #e4ebff 4px, #f8fafc 4px);
+  background-size: 80px 80px;
+}
+
 /* buttons */
 .btn {
   display: inline-flex;
