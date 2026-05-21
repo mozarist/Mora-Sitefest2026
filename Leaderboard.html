@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard - Mora</title>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet" />
+  </head>
+  <body>
+    <div class="lb-wrapper">
+      <div class="lb-header">
+        <h1>Leaderboard Poin Per Angkatan</h1>
+        <p class="lb-header-sub">
+          Monitoring peringkat kelas berdasarkan akumulasi poin terbaru.
+        </p>
+      </div>
+
+      <section class="lb-section lb-podium-section">
+        <div class="lb-section-title-wrap">
+          <h3 class="lb-section-title">Podium Top 3 Umum</h3>
+          <p class="lb-section-note">
+            Tiga kelas terbaik lintas angkatan berdasarkan poin tertinggi.
+          </p>
+        </div>
+
+        <div class="lb-podium-showcase" id="global-podium">
+          <article class="lb-podium-player rank-1">
+            <img
+              src="Assets/wali-kelas/wali-1.png"
+              alt="Foto wali kelas peringkat 2"
+              class="lb-podium-photo" />
+            <p class="lb-podium-name">-</p>
+            <p class="lb-podium-class">Kelas -</p>
+            <div class="lb-podium-block"><span>1</span></div>
+          </article>
+
+          <article class="lb-podium-player rank-1">
+            <img
+              src="Assets/wali-kelas/wali.2.jpeg"
+              alt="Foto wali kelas peringkat 1"
+              class="lb-podium-photo" />
+            <p class="lb-podium-name">-</p>
+            <p class="lb-podium-class">Kelas -</p>
+            <div class="lb-podium-block"><span>1</span></div>
+          </article>
+
+          <article class="lb-podium-player rank-3">
+            <img
+              src="Assets/wali-kelas/wali.3.png"
+              alt="Foto wali kelas peringkat 1"
+              class="lb-podium-photo" />
+            <p class="lb-podium-name">-</p>
+            <p class="lb-podium-class">Kelas -</p>
+            <div class="lb-podium-block"><span>1</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="lb-section lb-info-section">
+        <div class="lb-section-title-wrap">
+          <h3 class="lb-section-title">Informasi Per Angkatan</h3>
+        </div>
+
+        <div class="lb-charts-grid">
+          <article class="lb-chart-card">
+            <div class="lb-tier-block">
+              <div class="lb-winner-head">
+                <span class="lb-rank-pill">Angkatan 10</span>
+                <div class="lb-wali-meta">
+                  <img
+                    src="Assets/wali-kelas/wali.2.jpeg"
+                    alt="Foto wali kelas 10.2"
+                    class="lb-wali-photo" />
+                  <div>
+                    <p class="lb-wali-label">Wali Kelas</p>
+                    <p class="lb-wali-name">Bu Sari Ananda</p>
+                  </div>
+                </div>
+              </div>
+              <p class="lb-tier-label">
+                <i class="bx bxs-crown lb-winner-icon" aria-hidden="true"></i>
+                Pemenang Kelas
+              </p>
+              <p class="lb-tier-winner">10.2</p>
+              <p class="lb-tier-total">480 poin</p>
+            </div>
+            <div class="lb-chart-head">
+              <h4>Chart Angkatan 10</h4>
+            </div>
+            <div class="lb-bars">
+              <div class="lb-bar-row is-winner rank-1">
+                <span class="lb-class-label">10.2</span>
+                <div class="lb-bar-track">
+                  <div class="lb-bar-fill" style="--fill: 100%"></div>
+                </div>
+                <span class="lb-point-label">480</span>
+              </div>
+              <div class="lb-bar-row rank-2">
+                <span class="lb-class-label">10.1</span>
+                <div class="lb-bar-track">
+                  <div class="lb-bar-fill" style="--fill: 92%"></div>
+                </div>
+                <span class="lb-point-label">450</span>
+              </div>
+              <div class="lb-bar-row rank-3">
+                <span class="lb-class-label">10.3</span>
+                <div class="lb-bar-track">
+                  <div class="lb-bar-fill" style="--fill: 88%"></div>
+                </div>
+                <span class="lb-point-label">420</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="lb-chart-card">
+            <div class="lb-tier-block">
+              <div class="lb-winner-head">
+                <span class="lb-rank-pill">Angkatan 11</span>
+                <div class="lb-wali-meta">
+                  <img
+                    src="Assets/wali-kelas/wali-1.png"
+                    alt="Foto wali kelas 11.3"
+                    class="lb-wali-photo" />
+                  <div>
+                    <p class="lb-wali-label">Wali Kelas</p>
+                    <p class="lb-wali-name">Pak Dwi Kurnia</p>
+                  </div>
+                </div>
+              </div>
+              <p class="lb-tier-label">
+                <i class="bx bxs-crown lb-winner-icon" aria-hidden="true"></i>
+                Pemenang Kelas
+              </p>
+              <p class="lb-tier-winner">11.3</p>
+              <p class="lb-tier-total">470 poin</p>
+            </div>
+            <div class="lb-chart-head">
+              <h4>Chart Angkatan 11</h4>
+            </div>
+            <div class="lb-bars">
+              <div class="lb-bar-row is-winner rank-1">
+                <span class="lb-class-label">11.3</span>
+                <div class="lb-bar-track">
+                  <div class="lb-bar-fill" style="--fill: 100%"></div>
+                </div>
+                <span class="lb-point-label">470</span>
+              </div>
+              <div class="lb-bar-row rank-2">
+                <span class="lb-class-label">11.2</span>
+                <div class="lb-bar-track">
+                  <div class="lb-bar-fill" style="--fill: 89%"></div>
+                </div>
+                <span class="lb-point-label">430</span>
+              </div>
+              <div class="lb-bar-row rank-3">
+                <span class="lb-class-label">11.1</span>
+                <div class="lb-bar-track">
+                  <div class="lb-bar-fill" style="--fill: 86%"></div>
+                </div>
+                <span class="lb-point-label">400</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="lb-chart-card">
+            <div class="lb-tier-block">
+              <div class="lb-winner-head">
+                <span class="lb-rank-pill">Angkatan 12</span>
+                <div class="lb-wali-meta">
+                  <img
+                    src="Assets/wali-kelas/wali.3.png"
+                    alt="Foto wali kelas 12.1"
+                    class="lb-wali-photo" />
+                  <div>
+                    <p class="lb-wali-label">Wali Kelas</p>
+                    <p class="lb-wali-name">Bu Rina Mahesa</p>
+                  </div>
+                </div>
+              </div>
+              <p class="lb-tier-label">
+                <i class="bx bxs-crown lb-winner-icon" aria-hidden="true"></i>
+                Pemenang Kelas
+              </p>
+              <p class="lb-tier-winner">12.1</p>
+              <p class="lb-tier-total">500 poin</p>
+            </div>
+            <div class="lb-chart-head">
+              <h4>Chart Angkatan 12</h4>
+            </div>
+            <div class="lb-bars">
+              <div class="lb-bar-row is-winner rank-1">
+                <span class="lb-class-label">12.1</span>
+                <div class="lb-bar-track">
+                  <div class="lb-bar-fill" style="--fill: 100%"></div>
+                </div>
+                <span class="lb-point-label">500</span>
+              </div>
+              <div class="lb-bar-row rank-2">
+                <span class="lb-class-label">12.2</span>
+                <div class="lb-bar-track">
+                  <div class="lb-bar-fill" style="--fill: 98%"></div>
+                </div>
+                <span class="lb-point-label">490</span>
+              </div>
+              <div class="lb-bar-row rank-3">
+                <span class="lb-class-label">12.3</span>
+                <div class="lb-bar-track">
+                  <div class="lb-bar-fill" style="--fill: 97%"></div>
+                </div>
+                <span class="lb-point-label">485</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="lb-section lb-history">
+        <div class="lb-section-title-wrap">
+          <h3 class="lb-section-title">Tabel History Poin</h3>
+          <p class="lb-section-note lb-section-note-constrained">
+            Riwayat penambahan dan pengurangan poin lengkap dengan tanggal,
+            kelas, poin, dan indikator.
+          </p>
+        </div>
+
+        <div class="lb-controls-row">
+          <div class="lb-nav-tabs">
+            <button class="lb-btn-tab active" data-target="all">Semua</button>
+            <button class="lb-btn-tab" data-target="angkatan-10">
+              Angkatan 10
+            </button>
+            <button class="lb-btn-tab" data-target="angkatan-11">
+              Angkatan 11
+            </button>
+            <button class="lb-btn-tab" data-target="angkatan-12">
+              Angkatan 12
+            </button>
+          </div>
+
+          <div class="lb-search-wrap">
+            <input
+              id="history-search"
+              class="lb-search-input"
+              type="text"
+              placeholder="Cari kelas atau indikator..." />
+          </div>
+        </div>
+
+        <div class="lb-table-wrap">
+          <table class="lb-history-table">
+            <thead>
+              <tr>
+                <th>
+                  <button class="lb-sort-btn" data-sort="date">
+                    Tanggal
+                    <i
+                      class="bx bx-sort-alt-2 lb-sort-icon"
+                      aria-hidden="true"></i>
+                  </button>
+                </th>
+                <th>
+                  <button class="lb-sort-btn" data-sort="class">
+                    Kelas
+                    <i
+                      class="bx bx-sort-alt-2 lb-sort-icon"
+                      aria-hidden="true"></i>
+                  </button>
+                </th>
+                <th class="lb-col-poin">
+                  <button class="lb-sort-btn" data-sort="points">
+                    Poin
+                    <i
+                      class="bx bx-sort-alt-2 lb-sort-icon"
+                      aria-hidden="true"></i>
+                  </button>
+                </th>
+                <th>Indikator</th>
+                <th class="lb-col-status">Status</th>
+              </tr>
+            </thead>
+            <tbody id="history-body">
+              <tr
+                class="lb-history-row angkatan-10"
+                data-date="2026-05-12"
+                data-class="10.2"
+                data-points="80"
+                data-indicator="Program Daur Ulang Berjalan Konsisten"
+                data-status="plus">
+                <td>12/05/2026</td>
+                <td>10.2</td>
+                <td class="lb-poin-cell"></td>
+                <td
+                  class="lb-indikator-cell"
+                  title="Lingkungan: Daur Ulang Konsisten">
+                  Lingkungan: Daur Ulang Konsisten
+                </td>
+                <td class="lb-status-cell"></td>
+              </tr>
+              <tr
+                class="lb-history-row angkatan-11"
+                data-date="2026-05-11"
+                data-class="11.1"
+                data-points="50"
+                data-indicator="Aksi Sosial dan Dokumentasi Lengkap"
+                data-status="plus">
+                <td>11/05/2026</td>
+                <td>11.1</td>
+                <td class="lb-poin-cell"></td>
+                <td
+                  class="lb-indikator-cell"
+                  title="Sosial: Dokumentasi Lengkap">
+                  Sosial: Dokumentasi Lengkap
+                </td>
+                <td class="lb-status-cell"></td>
+              </tr>
+              <tr
+                class="lb-history-row angkatan-12"
+                data-date="2026-05-10"
+                data-class="12.2"
+                data-points="-30"
+                data-indicator="Keterlambatan Pengumpulan Laporan"
+                data-status="minus">
+                <td>10/05/2026</td>
+                <td>12.2</td>
+                <td class="lb-poin-cell"></td>
+                <td
+                  class="lb-indikator-cell"
+                  title="Disiplin: Telat Kumpul Laporan">
+                  Disiplin: Telat Kumpul Laporan
+                </td>
+                <td class="lb-status-cell"></td>
+              </tr>
+              <tr
+                class="lb-history-row angkatan-12"
+                data-date="2026-05-09"
+                data-class="12.1"
+                data-points="70"
+                data-indicator="Inisiatif Kampanye Sekolah Hijau"
+                data-status="plus">
+                <td>09/05/2026</td>
+                <td>12.1</td>
+                <td class="lb-poin-cell"></td>
+                <td
+                  class="lb-indikator-cell"
+                  title="Lingkungan: Inisiatif Sekolah Hijau">
+                  Lingkungan: Inisiatif Sekolah Hijau
+                </td>
+                <td class="lb-status-cell"></td>
+              </tr>
+              <tr
+                class="lb-history-row angkatan-10"
+                data-date="2026-05-08"
+                data-class="10.3"
+                data-points="-20"
+                data-indicator="Pelanggaran Kebersihan Kelas"
+                data-status="minus">
+                <td>08/05/2026</td>
+                <td>10.3</td>
+                <td class="lb-poin-cell"></td>
+                <td
+                  class="lb-indikator-cell"
+                  title="Disiplin: Pelanggaran Kebersihan">
+                  Disiplin: Pelanggaran Kebersihan
+                </td>
+                <td class="lb-status-cell"></td>
+              </tr>
+              <tr
+                class="lb-history-row angkatan-11"
+                data-date="2026-05-07"
+                data-class="11.3"
+                data-points="90"
+                data-indicator="Presentasi Solusi Sosial Terbaik"
+                data-status="plus">
+                <td>07/05/2026</td>
+                <td>11.3</td>
+                <td class="lb-poin-cell"></td>
+                <td
+                  class="lb-indikator-cell"
+                  title="Presentasi: Solusi Sosial Terbaik">
+                  Presentasi: Solusi Sosial Terbaik
+                </td>
+                <td class="lb-status-cell"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="lb-pagination" id="history-pagination">
+          <button class="lb-page-btn" id="page-prev">Sebelumnya</button>
+          <div class="lb-page-numbers" id="page-numbers"></div>
+          <button class="lb-page-btn" id="page-next">Selanjutnya</button>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const tabs = document.querySelectorAll(".lb-btn-tab");
+        const cards = document.querySelectorAll(".lb-chart-card");
+        const searchInput = document.getElementById("history-search");
+        const sortButtons = document.querySelectorAll(".lb-sort-btn");
+        const tbody = document.getElementById("history-body");
+        const prevBtn = document.getElementById("page-prev");
+        const nextBtn = document.getElementById("page-next");
+        const pageNumbers = document.getElementById("page-numbers");
+        const globalPodium = document.getElementById("global-podium");
+
+        const rows = Array.from(tbody.querySelectorAll(".lb-history-row"));
+
+        const state = {
+          filter: "all",
+          query: "",
+          sortKey: "date",
+          sortDir: "desc",
+          page: 1,
+          pageSize: 5,
+        };
+
+        function parsePoints(value) {
+          return Number(String(value).replace(/[^0-9-]/g, "")) || 0;
+        }
+
+        function setSortIcon(button, mode) {
+          const icon = button.querySelector(".lb-sort-icon");
+          if (!icon) return;
+          icon.classList.remove(
+            "bx-sort-alt-2",
+            "bx-up-arrow-alt",
+            "bx-down-arrow-alt",
+          );
+          icon.classList.add(
+            mode === "asc"
+              ? "bx-up-arrow-alt"
+              : mode === "desc"
+                ? "bx-down-arrow-alt"
+                : "bx-sort-alt-2",
+          );
+        }
+
+        function sanitizeRowData(row) {
+          const pointsRaw = row.dataset.points ?? "";
+          const safePoints = parsePoints(pointsRaw);
+          row.dataset.points = String(safePoints);
+        }
+
+        function normalizePoint(value) {
+          return Math.abs(value).toLocaleString("id-ID");
+        }
+
+        function decorateRow(row) {
+          const pointValue = Number(row.dataset.points);
+          const isPlus = pointValue >= 0;
+          const pointCell = row.querySelector(".lb-poin-cell");
+          const statusCell = row.querySelector(".lb-status-cell");
+          const pointText = normalizePoint(pointValue);
+
+          pointCell.innerHTML =
+            '<span class="lb-point-change ' +
+            (isPlus ? "plus" : "minus") +
+            '">' +
+            '<i class="bx ' +
+            (isPlus ? "bx-trending-up" : "bx-trending-down") +
+            '" aria-hidden="true"></i> ' +
+            (isPlus ? "+" : "-") +
+            pointText +
+            "</span>";
+
+          statusCell.innerHTML =
+            '<span class="lb-badge-point ' +
+            (isPlus ? "lb-badge-plus" : "lb-badge-minus") +
+            '">' +
+            (isPlus ? "Tambah" : "Kurang") +
+            "</span>";
+        }
+
+        rows.forEach(function (row) {
+          sanitizeRowData(row);
+          decorateRow(row);
+        });
+
+        const angkatanWinners = [];
+
+        function renderGlobalPodium(topThree) {
+          if (!globalPodium || topThree.length === 0) return;
+
+          const slotOrder = [
+            { rank: 1, index: 1 },
+            { rank: 1, index: 0 },
+            { rank: 1, index: 2 },
+          ];
+
+          globalPodium.innerHTML = slotOrder
+            .map(function (slot) {
+              const item = topThree[slot.index];
+              const profile = item
+                ? item.profile || {
+                    name: "Wali Kelas",
+                    photo: "Assets/wali-kelas/wali-1.png",
+                  }
+                : {
+                    name: "-",
+                    photo: "Assets/wali-kelas/wali-1.png",
+                  };
+
+              return (
+                '<article class="lb-podium-player rank-' +
+                slot.rank +
+                '">' +
+                '<img src="' +
+                profile.photo +
+                '" alt="Foto wali kelas peringkat ' +
+                slot.rank +
+                '" class="lb-podium-photo" />' +
+                '<p class="lb-podium-name">' +
+                profile.name +
+                "</p>" +
+                '<p class="lb-podium-class">Kelas ' +
+                (item ? item.classLabel : "-") +
+                "</p>" +
+                '<div class="lb-podium-block"><span>' +
+                slot.rank +
+                "</span></div>" +
+                "</article>"
+              );
+            })
+            .join("");
+        }
+
+        cards.forEach(function (card) {
+          const barsContainer = card.querySelector(".lb-bars");
+          const barRows = Array.from(card.querySelectorAll(".lb-bar-row"));
+          const winnerText = card.querySelector(".lb-tier-winner");
+          const totalText = card.querySelector(".lb-tier-total");
+
+          const sortedRows = barRows.sort(function (a, b) {
+            const pointA = parsePoints(
+              a.querySelector(".lb-point-label").textContent.trim(),
+            );
+            const pointB = parsePoints(
+              b.querySelector(".lb-point-label").textContent.trim(),
+            );
+            return pointB - pointA;
+          });
+
+          const maxPoints = parsePoints(
+            sortedRows[0].querySelector(".lb-point-label").textContent.trim(),
+          );
+
+          sortedRows.forEach(function (row, index) {
+            const pointValue = parsePoints(
+              row.querySelector(".lb-point-label").textContent.trim(),
+            );
+            const fill = row.querySelector(".lb-bar-fill");
+            const classLabel = row
+              .querySelector(".lb-class-label")
+              .textContent.trim();
+
+            barsContainer.appendChild(row);
+            row.classList.toggle("is-winner", index === 0);
+            row.classList.remove("rank-1", "rank-2", "rank-3");
+            row.classList.add(
+              index === 0 ? "rank-1" : index === 1 ? "rank-2" : "rank-3",
+            );
+
+            if (fill && maxPoints > 0) {
+              const ratio = Math.max(
+                20,
+                Math.round((pointValue / maxPoints) * 100),
+              );
+              fill.style.setProperty("--fill", ratio + "%");
+            }
+
+            if (index === 0) {
+              const waliNameNode = card.querySelector(".lb-wali-name");
+              const waliPhotoNode = card.querySelector(".lb-wali-photo");
+
+              winnerText.textContent = classLabel;
+              if (totalText) {
+                totalText.textContent =
+                  pointValue.toLocaleString("id-ID") + " poin";
+              }
+
+              angkatanWinners.push({
+                classLabel,
+                pointValue,
+                profile: {
+                  name: waliNameNode
+                    ? waliNameNode.textContent.trim()
+                    : "Wali Kelas",
+                  photo: waliPhotoNode
+                    ? waliPhotoNode.getAttribute("src")
+                    : "Assets/wali-kelas/wali-1.png",
+                },
+              });
+            }
+          });
+        });
+
+        if (angkatanWinners.length > 0) {
+          const topThree = angkatanWinners
+            .slice()
+            .sort(function (a, b) {
+              return b.pointValue - a.pointValue;
+            })
+            .slice(0, 3);
+          renderGlobalPodium(topThree);
+        }
+
+        function getFilteredRows() {
+          const keyword = state.query.toLowerCase();
+          return rows.filter(function (row) {
+            const byFilter =
+              state.filter === "all" || row.classList.contains(state.filter);
+            const byQuery =
+              row.dataset.class.toLowerCase().includes(keyword) ||
+              row.dataset.indicator.toLowerCase().includes(keyword);
+            return byFilter && byQuery;
+          });
+        }
+
+        function sortRows(list) {
+          return list.slice().sort(function (a, b) {
+            let valueA;
+            let valueB;
+
+            if (state.sortKey === "date") {
+              valueA = new Date(a.dataset.date).getTime();
+              valueB = new Date(b.dataset.date).getTime();
+            } else if (state.sortKey === "class") {
+              valueA = a.dataset.class;
+              valueB = b.dataset.class;
+            } else {
+              valueA = parsePoints(a.dataset.points);
+              valueB = parsePoints(b.dataset.points);
+            }
+
+            if (valueA < valueB) return state.sortDir === "asc" ? -1 : 1;
+            if (valueA > valueB) return state.sortDir === "asc" ? 1 : -1;
+            return 0;
+          });
+        }
+
+        function renderPagination(totalPages) {
+          pageNumbers.innerHTML = "";
+
+          for (let i = 1; i <= totalPages; i += 1) {
+            const btn = document.createElement("button");
+            btn.className =
+              "lb-page-number" + (i === state.page ? " active" : "");
+            btn.textContent = i;
+            btn.addEventListener("click", function () {
+              state.page = i;
+              renderTable();
+            });
+            pageNumbers.appendChild(btn);
+          }
+
+          prevBtn.disabled = state.page === 1;
+          nextBtn.disabled = state.page === totalPages;
+        }
+
+        function renderTable() {
+          const filtered = getFilteredRows();
+          const sorted = sortRows(filtered);
+          const totalPages = Math.max(
+            1,
+            Math.ceil(sorted.length / state.pageSize),
+          );
+
+          if (state.page > totalPages) {
+            state.page = totalPages;
+          }
+
+          const start = (state.page - 1) * state.pageSize;
+          const end = start + state.pageSize;
+          const pageRows = sorted.slice(start, end);
+
+          rows.forEach(function (row) {
+            row.style.display = "none";
+          });
+
+          const emptyRowId = "history-empty-row";
+          const existingEmptyRow = document.getElementById(emptyRowId);
+          if (existingEmptyRow) {
+            existingEmptyRow.remove();
+          }
+
+          if (pageRows.length === 0) {
+            const emptyRow = document.createElement("tr");
+            emptyRow.id = emptyRowId;
+            emptyRow.className = "lb-empty-row";
+            emptyRow.innerHTML =
+              '<td class="lb-empty-state" colspan="5">Data tidak ditemukan. Coba kata kunci atau filter lain.</td>';
+            tbody.appendChild(emptyRow);
+            renderPagination(totalPages);
+            return;
+          }
+
+          pageRows.forEach(function (row) {
+            row.style.display = "";
+            tbody.appendChild(row);
+          });
+
+          renderPagination(totalPages);
+        }
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            state.filter = tab.dataset.target;
+            state.page = 1;
+
+            tabs.forEach(function (item) {
+              item.classList.remove("active");
+            });
+            tab.classList.add("active");
+
+            renderTable();
+          });
+        });
+
+        searchInput.addEventListener("input", function () {
+          state.query = searchInput.value.trim();
+          state.page = 1;
+          renderTable();
+        });
+
+        sortButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            const key = button.dataset.sort;
+
+            if (state.sortKey === key) {
+              state.sortDir = state.sortDir === "asc" ? "desc" : "asc";
+            } else {
+              state.sortKey = key;
+              state.sortDir = key === "date" ? "desc" : "asc";
+            }
+
+            sortButtons.forEach(function (btn) {
+              btn.classList.remove("active");
+              setSortIcon(btn, "idle");
+            });
+
+            button.classList.add("active");
+            setSortIcon(button, state.sortDir);
+
+            state.page = 1;
+            renderTable();
+          });
+        });
+
+        prevBtn.addEventListener("click", function () {
+          if (state.page > 1) {
+            state.page -= 1;
+            renderTable();
+          }
+        });
+
+        nextBtn.addEventListener("click", function () {
+          const filtered = getFilteredRows();
+          const totalPages = Math.max(
+            1,
+            Math.ceil(filtered.length / state.pageSize),
+          );
+          if (state.page < totalPages) {
+            state.page += 1;
+            renderTable();
+          }
+        });
+
+        const defaultSortButton = document.querySelector(
+          '.lb-sort-btn[data-sort="date"]',
+        );
+        if (defaultSortButton) {
+          defaultSortButton.classList.add("active");
+          setSortIcon(defaultSortButton, "desc");
+        }
+
+        renderTable();
+      });
+    </script>
+  </body>
+</html>
