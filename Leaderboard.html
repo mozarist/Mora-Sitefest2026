@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Leaderboard - SITEFEST 2026</title>
+    <title>Leaderboard - Mora</title>
 
     <link
       rel="stylesheet"
@@ -31,14 +31,14 @@
         </div>
 
         <div class="lb-podium-showcase" id="global-podium">
-          <article class="lb-podium-player rank-2">
+          <article class="lb-podium-player rank-1">
             <img
               src="Assets/wali-kelas/wali-1.png"
               alt="Foto wali kelas peringkat 2"
               class="lb-podium-photo" />
             <p class="lb-podium-name">-</p>
             <p class="lb-podium-class">Kelas -</p>
-            <div class="lb-podium-block"><span>2</span></div>
+            <div class="lb-podium-block"><span>1</span></div>
           </article>
 
           <article class="lb-podium-player rank-1">
@@ -54,11 +54,11 @@
           <article class="lb-podium-player rank-3">
             <img
               src="Assets/wali-kelas/wali.3.png"
-              alt="Foto wali kelas peringkat 3"
+              alt="Foto wali kelas peringkat 1"
               class="lb-podium-photo" />
             <p class="lb-podium-name">-</p>
             <p class="lb-podium-class">Kelas -</p>
-            <div class="lb-podium-block"><span>3</span></div>
+            <div class="lb-podium-block"><span>1</span></div>
           </article>
         </div>
       </section>
@@ -491,9 +491,9 @@
           if (!globalPodium || topThree.length === 0) return;
 
           const slotOrder = [
-            { rank: 2, index: 1 },
+            { rank: 1, index: 1 },
             { rank: 1, index: 0 },
-            { rank: 3, index: 2 },
+            { rank: 1, index: 2 },
           ];
 
           globalPodium.innerHTML = slotOrder
