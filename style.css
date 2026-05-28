@@ -149,6 +149,114 @@ body {
   border-color: color-mix(in srgb, var(--border) 70%, var(--foreground) 10%);
 }
 
+/* login dialog */
+.login-dialog {
+  border: none;
+  padding: 0;
+  background: transparent;
+  max-width: min(92vw, 28rem);
+  width: 100%;
+  margin: 0;
+  position: fixed;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(10px);
+}
+
+.login-dialog__close {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  background: var(--background);
+  color: var(--foreground);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.login-dialog__form {
+  display: grid;
+  gap: 0.95rem;
+  margin-top: 1.25rem;
+}
+
+.login-dialog__field {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+}
+
+.login-dialog__field input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  padding: 0.7rem 1rem;
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.login-dialog__password-wrap {
+  position: relative;
+  display: block;
+}
+
+.login-dialog__password-wrap input {
+  padding-right: 3rem;
+}
+
+.login-dialog__toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.9rem;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--muted-foreground);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.login-dialog__toggle:hover {
+  color: var(--foreground);
+}
+
+.login-dialog__toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(20, 71, 230, 0.14);
+}
+
+.login-dialog__field input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(20, 71, 230, 0.14);
+}
+
+.login-dialog__actions {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  padding-top: 0.25rem;
+}
+
+.login-dialog__actions .btn {
+  width: 100%;
+}
+
 /* cards */
 .card {
   background-color: var(--surface);
