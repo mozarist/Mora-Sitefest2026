@@ -15,6 +15,11 @@
   </head>
   <body>
     <div class="lb-wrapper">
+      <a class="lb-back-link" href="index.html" aria-label="Kembali ke halaman utama">
+        <i class="bx bx-arrow-back" aria-hidden="true"></i>
+        <span>Kembali</span>
+      </a>
+
       <div class="lb-header">
         <h1>Leaderboard Poin Per Angkatan</h1>
         <p class="lb-header-sub">
@@ -22,43 +27,50 @@
         </p>
       </div>
 
-      <section class="lb-section lb-podium-section">
-        <div class="lb-section-title-wrap">
-          <h3 class="lb-section-title">Podium Top 3 Umum</h3>
-          <p class="lb-section-note">
-            Tiga kelas terbaik lintas angkatan berdasarkan poin tertinggi.
-          </p>
+      <section class="lb-podium-section">
+        <div class="lb-podium-meta" aria-label="Konteks podium">
+          <span class="lb-podium-badge">Top 3 Global</span>
+          <p class="lb-podium-caption">3 Kelas Terbaik Seluruh Angkatan</p>
         </div>
-
         <div class="lb-podium-showcase" id="global-podium">
-          <article class="lb-podium-player rank-1">
-            <img
-              src="Assets/wali-kelas/wali-1.png"
-              alt="Foto wali kelas peringkat 2"
-              class="lb-podium-photo" />
+          <article class="lb-podium-player rank-2">
+            <div class="lb-podium-photo-wrap">
+              <img
+                src="Assets/wali-kelas/wali-1.png"
+                alt="Foto wali kelas peringkat 2"
+                class="lb-podium-photo" />
+            </div>
             <p class="lb-podium-name">-</p>
             <p class="lb-podium-class">Kelas -</p>
-            <div class="lb-podium-block"><span>1</span></div>
+            <p class="lb-podium-points"><i class="bx bxs-bolt"></i> 0 poin</p>
+            <div class="lb-podium-block"><span>#2</span></div>
           </article>
 
           <article class="lb-podium-player rank-1">
-            <img
-              src="Assets/wali-kelas/wali.2.jpeg"
-              alt="Foto wali kelas peringkat 1"
-              class="lb-podium-photo" />
+            <div class="lb-podium-photo-wrap">
+              <img
+                src="Assets/wali-kelas/wali.2.jpeg"
+                alt="Foto wali kelas peringkat 1"
+                class="lb-podium-photo" />
+              <i class="bx bxs-crown lb-podium-crown" aria-hidden="true"></i>
+            </div>
             <p class="lb-podium-name">-</p>
             <p class="lb-podium-class">Kelas -</p>
-            <div class="lb-podium-block"><span>1</span></div>
+            <p class="lb-podium-points"><i class="bx bxs-bolt"></i> 0 poin</p>
+            <div class="lb-podium-block"><span>#1</span></div>
           </article>
 
           <article class="lb-podium-player rank-3">
-            <img
-              src="Assets/wali-kelas/wali.3.png"
-              alt="Foto wali kelas peringkat 1"
-              class="lb-podium-photo" />
+            <div class="lb-podium-photo-wrap">
+              <img
+                src="Assets/wali-kelas/wali.3.png"
+                alt="Foto wali kelas peringkat 3"
+                class="lb-podium-photo" />
+            </div>
             <p class="lb-podium-name">-</p>
             <p class="lb-podium-class">Kelas -</p>
-            <div class="lb-podium-block"><span>1</span></div>
+            <p class="lb-podium-points"><i class="bx bxs-bolt"></i> 0 poin</p>
+            <div class="lb-podium-block"><span>#3</span></div>
           </article>
         </div>
       </section>
@@ -207,14 +219,14 @@
                 <div class="lb-bar-track">
                   <div class="lb-bar-fill" style="--fill: 98%"></div>
                 </div>
-                <span class="lb-point-label">490</span>
+                <span class="lb-point-label">460</span>
               </div>
               <div class="lb-bar-row rank-3">
                 <span class="lb-class-label">12.3</span>
                 <div class="lb-bar-track">
                   <div class="lb-bar-fill" style="--fill: 97%"></div>
                 </div>
-                <span class="lb-point-label">485</span>
+                <span class="lb-point-label">450</span>
               </div>
             </div>
           </article>
@@ -491,9 +503,9 @@
           if (!globalPodium || topThree.length === 0) return;
 
           const slotOrder = [
-            { rank: 1, index: 1 },
+            { rank: 2, index: 1 },
             { rank: 1, index: 0 },
-            { rank: 1, index: 2 },
+            { rank: 3, index: 2 },
           ];
 
           globalPodium.innerHTML = slotOrder
@@ -513,19 +525,27 @@
                 '<article class="lb-podium-player rank-' +
                 slot.rank +
                 '">' +
+                '<div class="lb-podium-photo-wrap">' +
                 '<img src="' +
                 profile.photo +
                 '" alt="Foto wali kelas peringkat ' +
                 slot.rank +
                 '" class="lb-podium-photo" />' +
+                (slot.rank === 1
+                  ? '<i class="bx bxs-crown lb-podium-crown" aria-hidden="true"></i>'
+                  : "") +
+                "</div>" +
                 '<p class="lb-podium-name">' +
                 profile.name +
                 "</p>" +
                 '<p class="lb-podium-class">Kelas ' +
                 (item ? item.classLabel : "-") +
                 "</p>" +
+                '<p class="lb-podium-points"><i class="bx bxs-bolt"></i> ' +
+                (item ? item.pointValue.toLocaleString("id-ID") : "0") +
+                " poin</p>" +
                 '<div class="lb-podium-block"><span>' +
-                slot.rank +
+                "#" + slot.rank +
                 "</span></div>" +
                 "</article>"
               );
