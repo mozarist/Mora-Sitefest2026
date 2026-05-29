@@ -13,7 +13,7 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet" />
   </head>
-  <body>
+  <body class="leaderboard-page">
     <div class="lb-wrapper">
       <a class="lb-back-link" href="index.html" aria-label="Kembali ke halaman utama">
         <i class="bx bx-arrow-back" aria-hidden="true"></i>
@@ -43,7 +43,10 @@
             <p class="lb-podium-name">-</p>
             <p class="lb-podium-class">Kelas -</p>
             <p class="lb-podium-points"><i class="bx bxs-bolt"></i> 0 poin</p>
-            <div class="lb-podium-block"><span>#2</span></div>
+            <div class="lb-podium-block">
+              <i class="bx bxs-medal" aria-hidden="true"></i>
+              <span>#2</span>
+            </div>
           </article>
 
           <article class="lb-podium-player rank-1">
@@ -57,7 +60,10 @@
             <p class="lb-podium-name">-</p>
             <p class="lb-podium-class">Kelas -</p>
             <p class="lb-podium-points"><i class="bx bxs-bolt"></i> 0 poin</p>
-            <div class="lb-podium-block"><span>#1</span></div>
+            <div class="lb-podium-block">
+              <i class="bx bxs-trophy" aria-hidden="true"></i>
+              <span>#1</span>
+            </div>
           </article>
 
           <article class="lb-podium-player rank-3">
@@ -70,7 +76,10 @@
             <p class="lb-podium-name">-</p>
             <p class="lb-podium-class">Kelas -</p>
             <p class="lb-podium-points"><i class="bx bxs-bolt"></i> 0 poin</p>
-            <div class="lb-podium-block"><span>#3</span></div>
+            <div class="lb-podium-block">
+              <i class="bx bxs-award" aria-hidden="true"></i>
+              <span>#3</span>
+            </div>
           </article>
         </div>
       </section>
@@ -544,7 +553,13 @@
                 '<p class="lb-podium-points"><i class="bx bxs-bolt"></i> ' +
                 (item ? item.pointValue.toLocaleString("id-ID") : "0") +
                 " poin</p>" +
-                '<div class="lb-podium-block"><span>' +
+                '<div class="lb-podium-block"><i class="bx ' +
+                (slot.rank === 1
+                  ? "bxs-trophy"
+                  : slot.rank === 2
+                    ? "bxs-medal"
+                    : "bxs-award") +
+                '" aria-hidden="true"></i><span>' +
                 "#" + slot.rank +
                 "</span></div>" +
                 "</article>"
