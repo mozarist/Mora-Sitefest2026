@@ -78,7 +78,7 @@ body {
 }
 
 .pattern-grid {
-  background-image: linear-gradient(#e4ebff 4px, transparent 4px), linear-gradient(to right, #e4ebff 4px, #f8fafc 4px);
+  background-image: linear-gradient(hsl(from var(--muted) h s l / 40%) 4px, transparent 4px), linear-gradient(to right, hsl(from var(--muted) h s l / 40%) 4px, var(--background) 4px);
   background-size: 80px 80px;
 }
 
@@ -167,20 +167,6 @@ body {
   backdrop-filter: blur(10px);
 }
 
-.login-dialog__close {
-  width: 2.25rem;
-  height: 2.25rem;
-  border: 1px solid var(--border);
-  border-radius: 9999px;
-  background: var(--background);
-  color: var(--foreground);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  cursor: pointer;
-}
-
 .login-dialog__form {
   display: grid;
   gap: 0.95rem;
@@ -197,7 +183,7 @@ body {
 .login-dialog__field input {
   width: 100%;
   border: 1px solid var(--border);
-  border-radius: 9999px;
+  border-radius: 1rem;
   padding: 0.7rem 1rem;
   background: var(--background);
   color: var(--foreground);
