@@ -78,7 +78,7 @@ body {
 }
 
 .pattern-grid {
-  background-image: linear-gradient(hsl(from var(--muted) h s l / 40%) 4px, transparent 4px), linear-gradient(to right, hsl(from var(--muted) h s l / 40%) 4px, var(--background) 4px);
+  background-image: linear-gradient(hsl(from var(--primary) h s l / 10%) 2.5px, transparent 2.5px), linear-gradient(to right, hsl(from var(--primary) h s l / 10%) 2.5px, var(--background) 2.5px);
   background-size: 80px 80px;
 }
 
