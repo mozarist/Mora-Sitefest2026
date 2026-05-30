@@ -61,14 +61,14 @@
       </p>
     </div>
 
-    <section data-aos="fade-up" class="mb-7 py-3">
+    <section data-aos="fade-up" class="mb-7 pt-7 pattern-grid overflow-hidden">
       <div class="flex flex-col items-center gap-4 mb-10 text-center" aria-label="Konteks podium">
         <span
           class="inline-flex items-center rounded-full border border-border bg-primary/10 text-primary px-2.5 py-1 text-[13px] font-bold">
           Top 3 kelas terbaik
         </span>
       </div>
-      <div id="global-podium" class="mx-auto grid grid-cols-1 md:grid-cols-3 items-end justify-items-stretch gap-4 md:gap-0 max-w-[980px]">
+      <div id="global-podium" class="mx-auto grid grid-cols-1 md:grid-cols-3 items-end justify-items-stretch gap-4 md:gap-1.5 max-w-[980px]">
       </div>
     </section>
 
@@ -227,9 +227,9 @@
       </div>
     </section>
 
-    <section data-aos="fade-up" data-aos-anchor-placement="bottom" class="mt-5 card">
+    <section class="mt-5 card">
       <div class="mb-3">
-        <h3 class="text-[clamp(22px,1.4vw,28px)] font-medium text-primary">Riwayat Perolehan/Pengurangan Poin</h3>
+        <h3 class="text-[clamp(24px,1.4vw,28px)] font-medium text-primary">Perolehan/Pengurangan Poin</h3>
       </div>
 
       <div class="flex flex-wrap lg:flex-nowrap items-stretch lg:items-center justify-between gap-3 mb-3">
@@ -473,22 +473,22 @@
 
       function getPodiumCardClasses(rank) {
         const common =
-          "relative flex w-full flex-col items-center rounded-3xl border-2 bg-surface p-3 shadow-lg will-change-transform";
+          "relative mt-2 flex w-full flex-col items-center justify-center rounded-t-3xl border-2 border-b-0 border-r-16 bg-surface p-3 will-change-transform";
         if (rank === 1) {
           return (
             common +
-            " border-warning md:-translate-y-4 min-h-[340px]"
+            " border-warning min-h-[250px] md:min-h-[270px]"
           );
         }
         if (rank === 2) {
           return (
             common +
-            " border-border md:rotate-[-3deg] md:translate-x-6 md:translate-y-2 min-h-[300px]"
+            " border-muted-foreground/70 min-h-[250px] md:min-h-[240px]"
           );
         }
         return (
           common +
-          " border-info md:rotate-3 md:-translate-x-6 md:translate-y-3 min-h-[300px]"
+          " border-info min-h-[250px] md:min-h-[220px]"
         );
       }
 
@@ -572,9 +572,14 @@
           { rank: 3, index: 2 },
         ];
         const aosByRank = {
-          1: "flip-right",
-          2: "flip-right",
-          3: "flip-right",
+          1: "fade-up",
+          2: "fade-up",
+          3: "fade-up",
+        };
+        const aosDelayByRank = {
+          1: 250,
+          2: 325,
+          3: 400,
         };
 
         globalPodium.innerHTML = slotOrder
@@ -593,10 +598,10 @@
             return (
               '<article class="relative flex w-full items-stretch transition duration-300 ease-out will-change-transform ' +
               (slot.rank === 1
-                ? "hover:-translate-y-10 hover:z-10"
+                ? "md:hover:translate-y-2 hover:z-15"
                 : slot.rank === 2
-                  ? "hover:-translate-x-8"
-                  : "hover:translate-x-8") +
+                  ? "md:hover:-translate-x-4"
+                  : "md:hover:translate-x-4") +
               ' md:' +
               (slot.rank === 1
                 ? "order-2"
@@ -607,36 +612,9 @@
               '<div data-aos="' +
               aosByRank[slot.rank] +
               '" data-aos-duration="700" data-aos-delay="' +
-              (slot.rank === 1 ? "0" : slot.rank === 2 ? "120" : "240") +
-              '" class="' +
-              getPodiumCardClasses(slot.rank) +
-              '">' +
-              '<div class="relative block w-full h-52 rounded-2xl bg-muted overflow-hidden mb-4">' +
-              '<img src="' +
-              profile.photo +
-              '" alt="Foto wali kelas peringkat ' +
-              slot.rank +
-              '" class="w-full h-full object-cover object-top" />' +
-              (slot.rank === 1
-                ? '<i class="bx bxs-crown absolute top-2.5 right-2.5 text-warning text-2xl" aria-hidden="true"></i>'
-                : "") +
-              "</div>" +
-              '<p class="m-0 text-xl text-primary font-medium">' +
-              profile.name +
-              "</p>" +
-              '<p class="mb-3 text-[13px] font-semibold text-muted-foreground">Kelas ' +
-              (item ? item.classLabel : "-") +
-              "</p>" +
-              '<p class="mt-auto inline-flex items-center justify-center gap-1.5 rounded-full px-4 w-full h-9 text-sm text-center font-bold shadow-inner ' +
-              (slot.rank === 1
-                ? "bg-warning text-warning-foreground"
-                : slot.rank === 2
-                  ? "bg-secondary text-secondary-foreground"
-                  : "bg-info text-info-foreground") +
-              '"><i class="bx bxs-bolt text-lg"></i> ' +
-              (item ? item.pointValue.toLocaleString("id-ID") : "0") +
-              " poin</p>" +
-              '<div class="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 min-w-[74px] h-10 px-3.5 rounded-full border bg-surface shadow ' +
+              aosDelayByRank[slot.rank] +
+              '" class="flex w-full flex-col items-center gap-1">' +
+              '<div class="inline-flex items-center gap-1.5 min-w-[74px] h-10 px-3.5 mb-2 rounded-full border bg-surface shadow ' +
               getPodiumBadgeClasses(slot.rank) +
               '"><i class="bx ' +
               (slot.rank === 1
@@ -647,6 +625,32 @@
               ' text-xl" aria-hidden="true"></i><span class="text-base font-extrabold">' +
               "#" + slot.rank +
               "</span></div>" +
+              '<p class="m-0 text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-primary leading-none">' +
+              (item ? item.classLabel : "-") +
+              "</p>" +
+              '<div class="' +
+              getPodiumCardClasses(slot.rank) +
+              '">' +
+              '<div class="flex flex-col items-center text-center gap-2 w-full">' +
+              '<img src="' +
+              profile.photo +
+              '" alt="Foto wali kelas peringkat ' +
+              slot.rank +
+              '" class="w-16 h-16 rounded-full object-cover object-top border-2 border-surface shadow" />' +
+              '<p class="m-0 text-base md:text-lg font-semibold text-surface-foreground">' +
+              profile.name +
+              "</p>" +
+              '<p class="mt-0.5 inline-flex items-center justify-center gap-1.5 rounded-full px-4 min-w-[120px] h-9 text-sm text-center font-bold shadow-inner ' +
+              (slot.rank === 1
+                ? "bg-warning text-warning-foreground"
+                : slot.rank === 2
+                  ? "bg-secondary text-secondary-foreground"
+                  : "bg-info text-info-foreground") +
+              '"><i class="bx bxs-bolt text-lg"></i> ' +
+              (item ? item.pointValue.toLocaleString("id-ID") : "0") +
+              " poin</p>" +
+              "</div>" +
+              "</div>" +
               "</article>"
             );
           })
