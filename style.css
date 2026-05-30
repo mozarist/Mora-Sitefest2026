@@ -64,6 +64,7 @@ body {
   background-image:
     linear-gradient(#e4ebff 4px, transparent 4px),
     linear-gradient(to right, #e4ebff 4px, #f8fafc 4px);
+  background-image: linear-gradient(hsl(from var(--primary) h s l / 10%) 2.5px, transparent 2.5px), linear-gradient(to right, hsl(from var(--primary) h s l / 10%) 2.5px, var(--background) 2.5px);
   background-size: 80px 80px;
 }
 
