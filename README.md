@@ -11,7 +11,7 @@ Mora membantu admin dan guru memantau perkembangan perilaku siswa, mencatat pero
 - Landing Page Interaktif: tampilan landing yang menjelaskan tujuan platform, ringkasan statistik, bagian "Perolehan Poin", "Agenda Sekolah", dan "Rewards".
 - Input Poin: halaman `input-poin.html` menyediakan formulir untuk memasukkan penambahan atau pengurangan poin karakter siswa.
 - Leaderboard: halaman `Leaderboard.html` menampilkan peringkat kelas per angkatan, podium global, serta tabel histori perolehan/pengurangan poin dengan fitur pencarian, filter, sortir, dan paginasi yang dijalankan di browser.
-- Dashboard (UI Admin/Guru): `Dashboard.html` berisi tata letak admin dengan sidebar, kartu statistik, tabel aktivitas, panel guru, dan modal — antarmuka siap digunakan sebagai prototipe front-end.
+- Dashboard (UI Admin/Guru): `Dashboard.html` berisi tata letak admin dengan sidebar, kartu statistik, tabel aktivitas, panel guru, dan modal
 
 ## Struktur Halaman
 
