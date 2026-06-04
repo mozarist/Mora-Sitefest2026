@@ -37,5 +37,7 @@ Catatan: Proyek ini adalah aplikasi front-end statis. Tidak ada mekanisme autent
 - Ahmad Azzam Mozarist (github.com/mozarist)
 - Aoddi Reskeh Pechokov (github.com/oodikxeonz)
 
----
-File README ini dibuat berdasarkan isi aktual proyek; tidak menambahkan fitur yang tidak ada dalam berkas sumber.
+## Project Preview
+
+- Deployed Demo: https://mora-for-school.vercel.app
+- Repository GitHub: https://github.com/mozarist/Mora-Sitefest2026.git
