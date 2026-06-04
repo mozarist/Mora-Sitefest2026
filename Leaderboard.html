@@ -73,9 +73,20 @@
       </div>
     </section>
 
-    <section data-aos="fade-up" id="class-rankings" class="mt-3 mb-5 card">
-      <div class="mb-3">
+    <div data-aos="fade-up" class="mt-3 mb-5 flex justify-center">
+      <button id="class-ranking-toggle" type="button" aria-expanded="false" aria-controls="class-rankings"
+        class="btn btn-outline gap-2" style="padding: 0.7rem 1rem; font-size: 0.8125rem">
+        <i class="bx bx-list-ol text-base" aria-hidden="true" data-toggle-icon></i>
+        <span data-toggle-label>Lihat Seluruh Peringkat Kelas</span>
+      </button>
+    </div>
+
+    <section data-aos="fade-up" id="class-rankings" class="hidden mt-3 mb-5 card">
+      <div class="mb-3 text-center">
         <h3 class="m-0 text-[clamp(22px,1.4vw,28px)] font-medium text-primary">Peringkat Kelas Per Angkatan</h3>
+        <p class="m-0 mt-1 text-xs md:text-sm text-muted-foreground">
+          Urutan kelas di setiap angkatan berdasarkan akumulasi poin terbaru.
+        </p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -397,6 +408,8 @@
       const nextBtn = document.getElementById("page-next");
       const pageNumbers = document.getElementById("page-numbers");
       const globalPodium = document.getElementById("global-podium");
+      const rankingToggle = document.getElementById("class-ranking-toggle");
+      const rankingSection = document.getElementById("class-rankings");
 
       const rows = Array.from(tbody.querySelectorAll("[data-history-row]"));
 
@@ -736,6 +749,32 @@
           })
           .slice(0, 3);
         renderGlobalPodium(topThree);
+      }
+
+      if (rankingToggle && rankingSection) {
+        const toggleLabel = rankingToggle.querySelector("[data-toggle-label]");
+        const toggleIcon = rankingToggle.querySelector("[data-toggle-icon]");
+
+        rankingToggle.addEventListener("click", function () {
+          const isOpen = rankingToggle.getAttribute("aria-expanded") === "true";
+          const nextOpen = !isOpen;
+
+          rankingToggle.setAttribute("aria-expanded", String(nextOpen));
+          rankingSection.classList.toggle("hidden", !nextOpen);
+
+          if (toggleLabel) {
+            toggleLabel.textContent = nextOpen ? "Tutup Peringkat" : "Lihat Seluruh Peringkat Kelas";
+          }
+
+          if (toggleIcon) {
+            toggleIcon.classList.toggle("bx-list-ol", !nextOpen);
+            toggleIcon.classList.toggle("bx-chevron-up", nextOpen);
+          }
+
+          if (nextOpen && window.AOS && typeof AOS.refreshHard === "function") {
+            AOS.refreshHard();
+          }
+        });
       }
 
       function getFilteredRows() {
