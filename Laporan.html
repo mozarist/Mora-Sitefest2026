@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" href="Assets/logo/mora.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet" />
@@ -97,7 +98,6 @@
       gap: 8px;
       min-height: 44px;
       padding: 0 12px 0 0;
-      border-right: 1px solid var(--border);
       color: inherit;
       text-decoration: none;
     }
@@ -302,11 +302,12 @@
     }
 
     .topbar {
-      height: 82px;
+      height: 64px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 0 28px;
       gap: 18px;
       flex-shrink: 0;
@@ -346,7 +347,7 @@
       padding: 24px 28px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 12px;
       background: var(--background);
     }
 
@@ -490,8 +491,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--accent);
-      color: var(--accent-foreground);
+      background: var(--muted);
       border-right: 1px solid var(--border);
       font-size: 13px;
       font-weight: 700;
@@ -1276,28 +1276,52 @@
       }
     }
   </style>
+  <style type="text/tailwindcss">
+    @theme {
+        --color-background: oklch(98.415% 0.00352 248.585);
+        --color-foreground: oklch(16.376% 0.00002 271.152);
+        --color-primary: oklch(48.78% 0.24331 264.421);
+        --color-primary-foreground: oklch(98.412% 0.01893 201.193);
+        --color-secondary: oklch(37.17% 0.0392 257.31);
+        --color-secondary-foreground: oklch(98.415% 0.00352 248.585);
+        --color-accent: oklch(80.871% 0.09562 264.669);
+        --color-accent-foreground: oklch(48.78% 0.24331 264.421);
+        --color-muted: oklch(89.927% 0.00937 258.483);
+        --color-muted-foreground: oklch(28.908% 0.00003 271.152);
+        --color-surface: oklch(100% 0.00011 271.152);
+        --color-surface-foreground: oklch(20.768% 0.03985 265.767);
+        --color-border: oklch(86.898% 0.01994 252.99);
+        --color-success: oklch(72.19% 0.19585 148.461);
+        --color-success-foreground: oklch(98.193% 0.01802 156.147);
+        --color-warning: oklch(74.729% 0.16735 61.01);
+        --color-warning-foreground: oklch(98.688% 0.02129 95.306);
+        --color-destructive: oklch(57.707% 0.21516 27.312);
+        --color-destructive-foreground: oklch(97.053% 0.01292 16.91);
+        --color-info: oklch(54.616% 0.21529 262.896);
+        --color-info-foreground: oklch(97.048% 0.01429 254.737);
+      }
+  </style>
 </head>
 
 <body>
   <main class="main">
     <header class="topbar">
-      <div class="topbar-header">
-        <a href="index.html" class="brand-link">
-          <div class="logo-mark">
-            <img src="Assets/logo/mora.png" alt="Mora" />
-          </div>
-          <span class="logo-text">Mora</span>
-        </a>
-        <div class="topbar-title">
-          <span class="topbar-greeting">Form laporan siswa</span>
-          <span class="topbar-page">Laporan Karakter</span>
+      <a class="inline-flex items-center gap-1 min-h-6 mb-4 text-sm font-medium text-primary hover:underline underline-offset-2 hover:translate-x-0.5 transition"
+        href="index.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-arrow-left-icon lucide-arrow-left">
+          <path d="m12 19-7-7 7-7" />
+          <path d="M19 12H5" />
+        </svg>
+        Kembali
+      </a>
+      <a href="index.html" class="brand-link">
+        <div class="logo-mark">
+          <img src="Assets/logo/mora.png" alt="Mora" />
         </div>
-        <a class="icon-btn" href="index.html" aria-label="Kembali ke beranda">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-        </a>
-      </div>
+        <span class="logo-text">Mora</span>
+      </a>
     </header>
 
     <div class="content">
@@ -1323,7 +1347,7 @@
               <div class="field">
                 <label for="reporterClass">Kelas Pelapor</label>
                 <select id="reporterClass" required>
-                  <option value="">Pilih kelas kamu</option>
+                  <option value="">Pilih kelasmu</option>
                   <option value="X 1">X 1</option>
                   <option value="X 2">X 2</option>
                   <option value="XI 1">XI 1</option>
@@ -1343,7 +1367,7 @@
               <div class="field">
                 <label for="studentSearch">Nama Siswa Dilaporkan</label>
                 <div class="searchable-select" id="studentCombo">
-                  <input id="studentSearch" type="text" placeholder="Pilih kelas dulu" autocomplete="off" required
+                  <input id="studentSearch" type="text" placeholder="Silahkan memilih kelas dulu" autocomplete="off" required
                     disabled />
                   <input id="studentSelect" type="hidden" />
                   <div class="student-dropdown" id="studentDropdown" role="listbox"></div>
@@ -1401,14 +1425,15 @@
               </div>
 
               <div class="field full">
-                <label for="reportNote">Kronologi</label>
-                <textarea id="reportNote" placeholder="Jelaskan apa yang terjadi, lokasi, dan waktu kejadian..." required></textarea>
+                <label for="reportNote">Keterangan</label>
+                <textarea id="reportNote" placeholder="Jelaskan apa yang terjadi, lokasi, dan waktu kejadian..."
+                  required></textarea>
               </div>
             </div>
 
             <div class="form-actions">
-              <button class="action-btn secondary" type="reset">Batal</button>
-              <button class="action-btn primary" type="submit">
+              <button class="btn btn-outline" type="reset">Batal</button>
+              <button class="btn btn-primary" type="submit">
                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 12l4 4L19 6" />
                 </svg>
@@ -1527,7 +1552,8 @@
             </div>
           </div>
         </div>
-        <button class="action-btn primary" style="width:100%;border-radius:12px;font-size:14px;font-weight:700;min-height:48px;"
+        <button class="action-btn primary"
+          style="width:100%;border-radius:12px;font-size:14px;font-weight:700;min-height:48px;"
           onclick="closeModal('modalPengaturan')">Simpan Pengaturan</button>
       </div>
     </div>
