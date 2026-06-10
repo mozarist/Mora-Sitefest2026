@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mora</title>
+    <link rel="icon" type="image/png" href="Assets/logo/mora.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <style type="text/tailwindcss">
+        @theme {
+        --color-background: oklch(98.415% 0.00352 248.585);
+        --color-foreground: oklch(16.376% 0.00002 271.152);
+        --color-primary: oklch(48.78% 0.24331 264.421);
+        --color-primary-foreground: oklch(98.412% 0.01893 201.193);
+        --color-secondary: oklch(37.17% 0.0392 257.31);
+        --color-secondary-foreground: oklch(98.415% 0.00352 248.585);
+        --color-accent: oklch(80.871% 0.09562 264.669);
+        --color-accent-foreground: oklch(48.78% 0.24331 264.421);
+        --color-muted: oklch(89.927% 0.00937 258.483);
+        --color-muted-foreground: oklch(28.908% 0.00003 271.152);
+        --color-surface: oklch(100% 0.00011 271.152);
+        --color-surface-foreground: oklch(20.768% 0.03985 265.767);
+        --color-border: oklch(86.898% 0.01994 252.99);
+        --color-success: oklch(72.19% 0.19585 148.461);
+        --color-success-foreground: oklch(98.193% 0.01802 156.147);
+        --color-warning: oklch(74.729% 0.16735 61.01);
+        --color-warning-foreground: oklch(98.688% 0.02129 95.306);
+        --color-destructive: oklch(57.707% 0.21516 27.312);
+        --color-destructive-foreground: oklch(97.053% 0.01292 16.91);
+        --color-info: oklch(54.616% 0.21529 262.896);
+        --color-info-foreground: oklch(97.048% 0.01429 254.737);
+      }
+    </style>
+</head>
+
+<body class="custom-scrollbar overflow-hidden">
+    <div class="flex w-full h-screen">
+        <div class="flex-1 w-full h-full flex flex-col justify-between gap-6 bg-primary p-10 overflow-hidden">
+            <a class="inline-flex items-center gap-1 min-h-6 mb-4 text-sm font-medium text-primary-foreground hover:underline underline-offset-2 hover:translate-x-0.5 transition"
+                href="index.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-arrow-left-icon lucide-arrow-left">
+                    <path d="m12 19-7-7 7-7" />
+                    <path d="M19 12H5" />
+                </svg>
+                Kembali
+            </a>
+
+            <div class="space-y-6">
+                <a href="index.html" class="flex items-center justify-center gap-2 sm:justify-start">
+                    <img src="Assets/logo/mora.png" alt="Mora Logo"
+                        class="w-8 h-8 bg-primary-foreground p-1 rounded-md" />
+                    <span class="text-xl text-primary-foreground font-medium">
+                        Mora
+                    </span>
+                </a>
+
+                <h3 class="text-primary-foreground text-5xl">
+                    Kelola data siswa, bangun karakter lebih baik.
+                </h3>
+
+                <p class="text-sm text-primary-foreground/75">
+                    © 2026 Mora. All rights reserved.
+                </p>
+            </div>
+        </div>
+        <div class="flex-1 w-full h-full p-5">
+            <div class="h-full flex flex-col justify-center items-center">
+                <div class="flex flex-col gap-6 w-full max-w-lg">
+                    <div class="space-y-1">
+                        <h2 class="text-3xl font-medium tracking-tighter">
+                            Masuk ke akun Anda
+                        </h2>
+                        <p class="text-sm text-muted-foreground">
+                            Masukkan email dan password untuk mengakses dashboard Anda.
+                        </p>
+                    </div>
+
+                    <form class="flex flex-col gap-4 max-w-lg w-full">
+                        <label class="field w-full">
+                            <span>Email</span>
+                            <input class="input" type="email" name="email" placeholder="name@mora.sch.id" />
+                        </label>
+
+                        <label class="field w-full">
+                            <span>Password</span>
+                            <span class="login-dialog__password-wrap">
+                                <input type="password" name="password" id="login-password" class="input"
+                                    placeholder="Masukkan password" />
+                                <button type="button" id="toggle-password" class="login-dialog__toggle"
+                                    aria-label="Show password" aria-pressed="false">
+                                    <svg id="toggle-password-icon" xmlns="http://www.w3.org/2000/svg" width="20"
+                                        height="20" class="text-muted-foreground/70" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" aria-hidden="true">
+                                        <path
+                                            d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                </button>
+                            </span>
+                        </label>
+
+                        <a href="/Dashboard.html" class="btn btn-primary w-full">Masuk</a>
+                        <p class="text-sm text-muted-foreground text-center">
+                            Belum punya akun? <a href="" class="text-info hover:underline underline-offset-2">Hubungi
+                                Administrator</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true
+        });
+    </script>
+    <script>
+        const loginDialog = document.getElementById("login-dialog");
+        const openLoginButtons = document.querySelectorAll("[data-open-login]");
+        const closeLoginButton = document.getElementById("close-login");
+        const loginPassword = document.getElementById("login-password");
+        const togglePasswordButton = document.getElementById("toggle-password");
+        const togglePasswordIcon = document.getElementById(
+            "toggle-password-icon",
+        );
+        const siteHeader = document.querySelector(".site-header");
+        const navToggleButton = document.getElementById("nav-toggle");
+        const navToggleIcon = document.getElementById("nav-toggle-icon");
+        const siteNavMenu = document.getElementById("site-nav-menu");
+
+        let lastScrollY = window.scrollY;
+        let navMenuOpen = false;
+
+        const closeLoginDialog = () => {
+            if (loginDialog.open) {
+                loginDialog.close();
+            }
+        };
+
+        const closeNavMenu = () => {
+            navMenuOpen = false;
+            siteNavMenu.classList.add("hidden");
+            navToggleButton.setAttribute("aria-expanded", "false");
+            navToggleButton.setAttribute("aria-label", "Open navigation menu");
+            navToggleIcon.innerHTML =
+                '<path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" />';
+        };
+
+        const openNavMenu = () => {
+            navMenuOpen = true;
+            siteNavMenu.classList.remove("hidden");
+            navToggleButton.setAttribute("aria-expanded", "true");
+            navToggleButton.setAttribute("aria-label", "Close navigation menu");
+            navToggleIcon.innerHTML =
+                '<path d="M6 6 18 18" /><path d="M18 6 6 18" />';
+        };
+
+        const setHeaderVisibility = () => {
+            const currentScrollY = window.scrollY;
+            const isNearTop = currentScrollY < 24;
+            const scrollingDown = currentScrollY > lastScrollY && currentScrollY > 120;
+
+            if (navMenuOpen || isNearTop || !scrollingDown) {
+                siteHeader.classList.remove("is-hidden");
+            } else {
+                siteHeader.classList.add("is-hidden");
+            }
+
+            lastScrollY = currentScrollY;
+        };
+
+        openLoginButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                loginDialog.showModal();
+            });
+        });
+
+        navToggleButton.addEventListener("click", () => {
+            if (navMenuOpen) {
+                closeNavMenu();
+            } else {
+                openNavMenu();
+            }
+        });
+
+        siteNavMenu.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", closeNavMenu);
+        });
+
+        closeLoginButton.addEventListener("click", closeLoginDialog);
+
+        togglePasswordButton.addEventListener("click", () => {
+            const showPassword = loginPassword.type === "password";
+            loginPassword.type = showPassword ? "text" : "password";
+            togglePasswordButton.setAttribute("aria-pressed", String(showPassword));
+            togglePasswordButton.setAttribute(
+                "aria-label",
+                showPassword ? "Hide password" : "Show password",
+            );
+
+            togglePasswordIcon.innerHTML = showPassword
+                ? '<path d="M17.94 17.94A10.73 10.73 0 0 1 12 20c-5.05 0-9.27-3.11-10.94-7.5a1 1 0 0 1 0-.69A11.4 11.4 0 0 1 5 6.17M9.9 4.24A10.94 10.94 0 0 1 12 4c5.05 0 9.27 3.11 10.94 7.5a1 1 0 0 1 0 .69 11.36 11.36 0 0 1-4.16 5.11M1 1l22 22" /><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />'
+                : '<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle cx="12" cy="12" r="3" />';
+        });
+
+        loginDialog.addEventListener("click", (event) => {
+            const dialogBounds = loginDialog.getBoundingClientRect();
+            const clickedOutside =
+                event.clientX < dialogBounds.left ||
+                event.clientX > dialogBounds.right ||
+                event.clientY < dialogBounds.top ||
+                event.clientY > dialogBounds.bottom;
+
+            if (clickedOutside) {
+                closeLoginDialog();
+            }
+        });
+
+        window.addEventListener("scroll", setHeaderVisibility, { passive: true });
+        document.addEventListener("scroll", setHeaderVisibility, { passive: true });
+        window.addEventListener("resize", () => {
+            if (window.innerWidth >= 768) {
+                closeNavMenu();
+                siteHeader.classList.remove("is-hidden");
+            }
+        });
+
+        setHeaderVisibility();
+    </script>
+</body>
+
+</html>

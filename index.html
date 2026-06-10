@@ -51,12 +51,12 @@
     style="left: 50%; transform: translateX(-50%); width: min(calc(100vw - 2rem), 56rem);">
     <nav
       class="flex flex-wrap items-center gap-3 rounded-3xl bg-surface border border-border p-3 shadow-xs sm:flex-nowrap sm:justify-between sm:gap-4 sm:rounded-full sm:p-1 sm:pl-6">
-      <div class="brand-link flex items-center justify-center -space-x-1 sm:justify-start">
+      <a href="#" class="flex items-center justify-center -space-x-1 sm:justify-start">
         <img src="Assets/logo/logo.svg" alt="Mora Logo" class="w-9 h-9" />
-        <a href="#" class="text-xl text-primary font-medium tracking-tighter">
+        <span class="text-xl text-primary font-medium tracking-tighter">
           Mora
-        </a>
-      </div>
+        </span>
+      </a>
 
       <button type="button" id="nav-toggle" class="nav-toggle text-primary ml-auto md:hidden p-2"
         aria-controls="site-nav-menu" aria-expanded="false" aria-label="Open navigation menu">
@@ -82,59 +82,21 @@
           <a href="#rewards"
             class="rounded-full px-3 md:py-2 text-muted-foreground hover:underline hover:decoration-blue-700 underline-offset-4 text-base hover:text-primary md:px-0 md:py-0 transition-all">Rewards</a>
         </div>
-        <div class="block md:hidden">
-          <button type="button" data-open-login class="btn btn-primary w-full" style="padding: 0.8rem 1.5rem">
+        <a href="Login.html" class="block md:hidden">
+          <button type="button" class="btn btn-primary w-full" style="padding: 0.8rem 1.5rem">
             Login
           </button>
-        </div>
+        </a>
       </div>
       <div class="hidden md:block">
-        <button type="button" data-open-login class="btn btn-primary w-fit" style="padding: 0.8rem 1.5rem">
-          Login
-        </button>
+        <a href="Login.html">
+          <button type="button" class="btn btn-primary w-fit" style="padding: 0.8rem 1.5rem">
+            Login
+          </button>
+        </a>
       </div>
     </nav>
   </header>
-
-  <dialog id="login-dialog" class="login-dialog card">
-    <div class="flex items-start justify-between gap-4">
-      <div>
-        <p class="text-sm font-medium text-primary">Login Mora</p>
-        <h2 class="text-2xl font-medium tracking-tighter">
-          Masuk ke akun Anda
-        </h2>
-      </div>
-      <button type="button" id="close-login" class="text-2xl text-muted-foreground w-8" aria-label="Close login form">
-        &times;
-      </button>
-    </div>
-
-    <form method="dialog" class="login-dialog__form">
-      <label class="login-dialog__field">
-        <span>Email</span>
-        <input type="email" name="email" placeholder="nama@sekolah.id" required />
-      </label>
-
-      <label class="login-dialog__field">
-        <span>Password</span>
-        <span class="login-dialog__password-wrap">
-          <input type="password" name="password" id="login-password" placeholder="Masukkan password" required />
-          <button type="button" id="toggle-password" class="login-dialog__toggle" aria-label="Show password"
-            aria-pressed="false">
-            <svg id="toggle-password-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-              class="text-muted-foreground/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path
-                d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-          </button>
-        </span>
-      </label>
-
-      <a href="/Dashboard.html" class="btn btn-primary w-full">Masuk</a>
-    </form>
-  </dialog>
 
   <!-- hero -->
   <section id=""
@@ -147,7 +109,7 @@
           <span data-aos="fade-up" data-aos-duration="1000" class="font-[Instrument_Serif] italic">lebih baik</span>
         </h1>
         <p data-aos="fade-up" data-aos-duration="500" data-aos-delay="100"
-          class="text-base md:text-lg lg:text-xl text-muted-foreground text-center leading-tight max-w-md md:max-w-xl lg:max-w-3xl mx-auto transition-all">
+          class="text-base md:text-lg 2xl:text-xl text-muted-foreground text-center leading-tight max-w-md md:max-w-xl lg:max-w-3xl mx-auto transition-all">
           Mora membantu sekolah mengelola profil siswa, memantau perkembangan
           perilaku, dan mencatat poin pembinaan secara lebih rapi, terarah,
           dan efisien.
@@ -206,7 +168,7 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 w-full">
-        <div class="relative flex flex-col items-center justify-center card space-y-6 shadow-sm transition-all min-h-72">
+        <div data-aos="fade-up" class="relative flex flex-col items-center justify-center card space-y-6 shadow-sm transition-all min-h-72">
           <img src="Assets/illustrations/people-document.svg" alt="" class="w-full h-40 object-center" />
           <div class="text-center space-y-1">
             <h5 class="text-xl text-primary font-medium">Pendataan Siswa</h5>
@@ -216,7 +178,7 @@
             </p>
           </div>
         </div>
-        <div class="relative flex flex-col items-center justify-center card space-y-6 shadow-sm transition-all min-h-72">
+        <div data-aos="fade-up" data-aos-delay="200" class="relative flex flex-col items-center justify-center card space-y-6 shadow-sm transition-all min-h-72">
           <img src="Assets/illustrations/people-grades.svg" alt="" class="w-full h-40 object-center" />
           <div class="text-center space-y-1">
             <h5 class="text-xl text-primary font-medium">
@@ -228,7 +190,7 @@
             </p>
           </div>
         </div>
-        <div class="relative flex flex-col items-center justify-center card space-y-6 shadow-sm transition-all min-h-72">
+        <div data-aos="fade-up" data-aos-delay="400" class="relative flex flex-col items-center justify-center card space-y-6 shadow-sm transition-all min-h-72">
           <img src="Assets/illustrations/guidance.svg" alt="" class="w-full h-40 object-center" />
           <div class="text-center space-y-1">
             <h5 class="text-xl text-primary font-medium">
@@ -243,8 +205,8 @@
       </div>
     </section>
 
-    <section data-aos="fade-up" id="poin" class="flex flex-col gap-10 items-center w-full scroll-m-34 overflow-hidden">
-      <div class="flex items-center gap-2 max-w-2xl">
+    <section id="poin" class="flex flex-col gap-10 items-center w-full scroll-m-34 overflow-hidden">
+      <div data-aos="fade-up" class="flex items-center gap-2 max-w-2xl">
         <h2 class="text-3xl md:text-4xl lg:text-5xl text-center tracking-tighter">
           Perkembangan karakter yang
           <span class="text-primary">tercatat</span> secara
@@ -252,7 +214,7 @@
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-3">
+      <div data-aos="fade-up" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-3">
         <div class="relative w-full min-h-72 bg-surface border-border rounded-2xl overflow-hidden">
           <img
             src="https://images.unsplash.com/photo-1660795468951-0b37051eb1b2?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -260,7 +222,7 @@
           <div class="absolute inset-0 bg-linear-to-t from-black/75 via-black/25 to-transparent"></div>
           <div class="absolute inset-x-0 bottom-0 p-4 md:p-5 lg:p-6">
             <p
-              class="max-w-[14rem] text-lg md:text-xl font-medium leading-snug text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+              class="max-w-[14rem] text-lg text-primary-foreground font-medium">
               Teruslah meraih prestasi!
             </p>
           </div>
@@ -337,16 +299,16 @@
           <div class="absolute inset-0 bg-linear-to-t from-black/75 via-black/25 to-transparent"></div>
           <div class="absolute inset-x-0 bottom-0 p-4 md:p-5 lg:p-6">
             <p
-              class="max-w-[14rem] text-lg md:text-xl font-medium leading-snug text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
-              Jauhilah keburukan yang mengganggu karaktermu!
+              class="max-w-[14rem] text-lg text-primary-foreground font-medium">
+              Tolak citra karakter negatif!
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <section data-aos="fade-up" id="agenda" class="flex flex-col gap-10 items-center w-full scroll-m-34 overflow-hidden">
-      <div class="flex flex-col gap-2 items-center max-w-md">
+    <section id="agenda" class="flex flex-col gap-10 items-center w-full scroll-m-34 overflow-hidden">
+      <div data-aos="fade-up" class="flex flex-col gap-2 items-center max-w-md">
         <h2 class="text-3xl md:text-4xl lg:text-5xl text-center tracking-tighter">
           <span class="text-primary">Kegiatan sekolah</span> yang
           <span class="font-[Instrument_Serif] italic">menghubungkan</span>
@@ -501,8 +463,8 @@
       </div>
     </section>
 
-    <section data-aos="fade-up" id="rewards" class="flex flex-col gap-4 md:gap-16 lg:gap-20 items-center w-full scroll-m-34">
-      <div class="flex flex-col items-center gap-2 max-w-2xl">
+    <section id="rewards" class="flex flex-col gap-4 md:gap-16 lg:gap-20 items-center w-full scroll-m-34">
+      <div data-aos="fade-up" class="flex flex-col items-center gap-2 max-w-2xl">
         <h2 class="text-3xl md:text-4xl lg:text-5xl text-center tracking-tighter">
           Kelas terbaik pantas mendapatkan
           <span class="text-primary">Reward</span>
@@ -671,119 +633,6 @@
     AOS.init({
       once: true
     });
-  </script>
-  <script>
-    const loginDialog = document.getElementById("login-dialog");
-    const openLoginButtons = document.querySelectorAll("[data-open-login]");
-    const closeLoginButton = document.getElementById("close-login");
-    const loginPassword = document.getElementById("login-password");
-    const togglePasswordButton = document.getElementById("toggle-password");
-    const togglePasswordIcon = document.getElementById(
-      "toggle-password-icon",
-    );
-    const siteHeader = document.querySelector(".site-header");
-    const navToggleButton = document.getElementById("nav-toggle");
-    const navToggleIcon = document.getElementById("nav-toggle-icon");
-    const siteNavMenu = document.getElementById("site-nav-menu");
-
-    let lastScrollY = window.scrollY;
-    let navMenuOpen = false;
-
-    const closeLoginDialog = () => {
-      if (loginDialog.open) {
-        loginDialog.close();
-      }
-    };
-
-    const closeNavMenu = () => {
-      navMenuOpen = false;
-      siteNavMenu.classList.add("hidden");
-      navToggleButton.setAttribute("aria-expanded", "false");
-      navToggleButton.setAttribute("aria-label", "Open navigation menu");
-      navToggleIcon.innerHTML =
-        '<path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" />';
-    };
-
-    const openNavMenu = () => {
-      navMenuOpen = true;
-      siteNavMenu.classList.remove("hidden");
-      navToggleButton.setAttribute("aria-expanded", "true");
-      navToggleButton.setAttribute("aria-label", "Close navigation menu");
-      navToggleIcon.innerHTML =
-        '<path d="M6 6 18 18" /><path d="M18 6 6 18" />';
-    };
-
-    const setHeaderVisibility = () => {
-      const currentScrollY = window.scrollY;
-      const isNearTop = currentScrollY < 24;
-      const scrollingDown = currentScrollY > lastScrollY && currentScrollY > 120;
-
-      if (navMenuOpen || isNearTop || !scrollingDown) {
-        siteHeader.classList.remove("is-hidden");
-      } else {
-        siteHeader.classList.add("is-hidden");
-      }
-
-      lastScrollY = currentScrollY;
-    };
-
-    openLoginButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        loginDialog.showModal();
-      });
-    });
-
-    navToggleButton.addEventListener("click", () => {
-      if (navMenuOpen) {
-        closeNavMenu();
-      } else {
-        openNavMenu();
-      }
-    });
-
-    siteNavMenu.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", closeNavMenu);
-    });
-
-    closeLoginButton.addEventListener("click", closeLoginDialog);
-
-    togglePasswordButton.addEventListener("click", () => {
-      const showPassword = loginPassword.type === "password";
-      loginPassword.type = showPassword ? "text" : "password";
-      togglePasswordButton.setAttribute("aria-pressed", String(showPassword));
-      togglePasswordButton.setAttribute(
-        "aria-label",
-        showPassword ? "Hide password" : "Show password",
-      );
-
-      togglePasswordIcon.innerHTML = showPassword
-        ? '<path d="M17.94 17.94A10.73 10.73 0 0 1 12 20c-5.05 0-9.27-3.11-10.94-7.5a1 1 0 0 1 0-.69A11.4 11.4 0 0 1 5 6.17M9.9 4.24A10.94 10.94 0 0 1 12 4c5.05 0 9.27 3.11 10.94 7.5a1 1 0 0 1 0 .69 11.36 11.36 0 0 1-4.16 5.11M1 1l22 22" /><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />'
-        : '<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle cx="12" cy="12" r="3" />';
-    });
-
-    loginDialog.addEventListener("click", (event) => {
-      const dialogBounds = loginDialog.getBoundingClientRect();
-      const clickedOutside =
-        event.clientX < dialogBounds.left ||
-        event.clientX > dialogBounds.right ||
-        event.clientY < dialogBounds.top ||
-        event.clientY > dialogBounds.bottom;
-
-      if (clickedOutside) {
-        closeLoginDialog();
-      }
-    });
-
-    window.addEventListener("scroll", setHeaderVisibility, { passive: true });
-    document.addEventListener("scroll", setHeaderVisibility, { passive: true });
-    window.addEventListener("resize", () => {
-      if (window.innerWidth >= 768) {
-        closeNavMenu();
-        siteHeader.classList.remove("is-hidden");
-      }
-    });
-
-    setHeaderVisibility();
   </script>
 </body>
 
