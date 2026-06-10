@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Agenda - Mora</title>
+    <link rel="icon" type="image/png" href="Assets/logo/mora.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+       
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            min-height: 100vh;
+            overflow: hidden;
+            background-color: var(--background);
+            color: var(--foreground);
+            font-family: "Geist", sans-serif;
+            letter-spacing: -0.025em;
+        }
+        body.sidebar-open { overflow: hidden; }
+        ::-webkit-scrollbar, .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track, .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb, .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover, .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 0.8rem 1.2rem; font-size: 0.875rem; font-weight: 500; line-height: 1; text-decoration: none;
+            transition: all 150ms ease; border: 1px solid transparent; border-radius: 9999px; cursor: pointer;
+        }
+        .btn:hover { transform: translateY(-1px); }
+        .btn:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(20, 71, 230, 0.18); }
+        .btn-primary { background-color: var(--primary); color: var(--primary-foreground); }
+        .btn-primary:hover { background-color: color-mix(in srgb, var(--primary) 90%, black); }
+        .sidebar {
+            width: 240px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column;
+            height: 100vh; flex-shrink: 0; position: relative; overflow: hidden; transition: transform 0.24s ease;
+        }
+        .sidebar-toggle { display: none !important; }
+        .sidebar-overlay { display: none; }
+        .sidebar-logo { padding: 24px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 7px; }
+        .logo-mark { width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; background: color-mix(in srgb, var(--primary) 10%, transparent); }
+        .logo-mark img { width: 26px; height: 26px; object-fit: contain; }
+        .logo-text { font-family: "Geist", sans-serif; font-size: 22px; font-weight: 500; color: var(--primary); letter-spacing: -0.06em; }
+        .sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        .nav-item {
+            display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px;
+            color: var(--muted-foreground); font-size: 13.5px; font-weight: 500; cursor: pointer; transition: all 0.18s ease;
+            border: 1px solid transparent; text-decoration: none;
+        }
+        .nav-item:hover { background: var(--muted); color: var(--foreground); }
+        .nav-item.active { background: color-mix(in srgb, var(--primary) 10%, transparent); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 20%, transparent); }
+        .nav-item.active svg { opacity: 1; }
+        .nav-item svg { width: 16px; height: 16px; opacity: 0.7; flex-shrink: 0; }
+        .sidebar-footer { padding: 16px 12px; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+        .profile-card { display: flex; align-items: center; padding: 10px 12px; border-radius: 10px; gap: 10px; cursor: pointer; transition: all 0.18s; }
+        .profile-card:hover { background: color-mix(in srgb, var(--muted) 50%, var(--border)); }
+        .profile-avatar { width: 34px; height: 34px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+        .profile-name { font-size: 12.5px; font-weight: 600; color: var(--foreground); line-height: 1.2; }
+        .profile-role { font-size: 10px; color: var(--muted-foreground); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px; }
+        .profile-menu-btn { margin-left: auto; color: var(--muted-foreground); flex-shrink: 0; }
+        .main { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .topbar { height: 82px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 28px; gap: 16px; flex-shrink: 0; }
+        .topbar-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex: 0 0 auto; }
+        .topbar-title { display: flex; flex-direction: column; }
+        .topbar-greeting { font-size: 12px; color: var(--muted-foreground); font-weight: 500; }
+        .topbar-page { font-size: 15px; font-weight: 600; color: var(--foreground); line-height: 1; }
+        .topbar-divider { width: 1px; height: 32px; background: var(--border); margin: 0 8px; }
+        .search-wrap { position: relative; flex: 1; max-width: 360px; }
+        .search-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--muted-foreground); }
+        .search-input { width: 100%; background: var(--background); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px 8px 36px; font-size: 13px; font-family: 'Geist', sans-serif; color: var(--foreground); outline: none; transition: all 0.18s; }
+        .search-input:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent); }
+        .search-input::placeholder { color: var(--muted-foreground); }
+        .icon-btn { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted-foreground); transition: all 0.15s; position: relative; }
+        .icon-btn:hover { background: var(--muted); }
+        .icon-btn svg { width: 16px; height: 16px; }
+        .content { flex: 1; overflow-y: auto; padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; background: var(--background); }
+        .table-card { background: var(--surface); border: 1px solid var(--border); border-radius: 1.2rem; overflow: hidden; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08); display: flex; flex-direction: column; flex: 1; min-height: 0; }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .modal-header-left { display: flex; align-items: center; gap: 14px; }
+        .modal-icon { width: 44px; height: 44px; border-radius: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .modal-icon svg { width: 22px; height: 22px; }
+        .modal-title { font-size: 17px; font-weight: 700; color: var(--foreground); letter-spacing: -0.3px; }
+        .modal-subtitle { font-size: 12px; color: var(--muted-foreground); margin-top: 1px; }
+        .modal-toolbar { padding: 12px 20px; background: var(--muted); border-bottom: 1px solid var(--border); flex-shrink: 0; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .modal-input { flex: 1; min-width: 200px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; padding: 8px 14px; font-size: 13px; font-family: 'Geist', sans-serif; color: var(--foreground); outline: none; transition: all 0.18s; }
+        .modal-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent); }
+        .modal-body { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .agenda-item { border-radius: 12px; padding: 14px 16px; border: 1px solid var(--border); cursor: pointer; transition: all 0.18s; display: flex; gap: 14px; align-items: flex-start; text-decoration: none;}
+        .agenda-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 6%, transparent); }
+        .agenda-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+        .agenda-date { font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-bottom: 4px; }
+        .agenda-title { font-size: 14px; font-weight: 700; color: var(--foreground); margin-bottom: 4px; }
+        .agenda-desc { font-size: 12px; color: var(--muted-foreground); line-height: 1.5; }
+        .modal-select { background: var(--surface); border: 1px solid var(--border); border-radius: 9px; padding: 8px 14px; font-size: 12.5px; font-family: 'Geist', sans-serif; font-weight: 600; color: var(--surface-foreground); outline: none; cursor: pointer; transition: all 0.18s; }
+        .modal-select:focus { border-color: var(--primary); }
+        .add-btn { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--primary); background: color-mix(in srgb, var(--primary) 10%, transparent); border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent); border-radius: 8px; padding: 8px 14px; cursor: pointer; transition: all 0.15s; font-family: 'Geist', sans-serif; }
+        .add-btn:hover { background: var(--primary); color: var(--primary-foreground); }
+        .text-btn { font-size: 12px; font-weight: 600; color: var(--primary); background: none; border: none; cursor: pointer; transition: opacity 0.15s; font-family: 'Geist', sans-serif; }
+        .text-btn:hover { opacity: 0.7; }
+        .empty-state { display: none; text-align: center; padding: 32px; color: var(--muted-foreground); font-size: 13px; }
+        .profile-dropdown { position: absolute; bottom: 78px; left: 12px; right: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 8px; z-index: 50; box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.08); opacity: 0; pointer-events: none; transform: translateY(4px); transition: all 0.18s ease; }
+        .profile-dropdown.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+        .dropdown-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 9px; font-size: 13px; font-weight: 500; color: var(--surface-foreground); cursor: pointer; transition: all 0.12s; }
+        .dropdown-item:hover { background: var(--muted); }
+        .dropdown-item svg { width: 15px; height: 15px; }
+        .dropdown-item.danger { color: var(--destructive); }
+        .dropdown-item.danger:hover { background: color-mix(in srgb, var(--destructive) 10%, transparent); }
+        .dropdown-sep { height: 1px; background: var(--border); margin: 4px 0; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(10, 10, 20, 0.45); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.22s ease; }
+        .modal-overlay.open { opacity: 1; pointer-events: all; }
+        .modal-popup { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; width: 100%; max-width: 520px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; transform: scale(0.96) translateY(8px); transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 24px 80px rgba(10, 10, 30, 0.15); }
+        .modal-overlay.open .modal-popup { transform: scale(1) translateY(0); }
+        .modal-close { width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--border); background: none; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted-foreground); transition: all 0.15s; }
+        .modal-close:hover { background: color-mix(in srgb, var(--destructive) 10%, transparent); color: var(--destructive); border-color: color-mix(in srgb, var(--destructive) 30%, transparent); }
+        .modal-close svg { width: 16px; height: 16px; }
+        @media (max-width: 900px) { body { overflow: auto; } .main { height: auto; min-height: 100vh; } .content { overflow: visible; } }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar-toggle { display: inline-flex !important; align-items: center; justify-content: center; flex-shrink: 0; }
+            .sidebar-overlay { display: block; position: fixed; inset: 0; background: rgba(10, 10, 20, 0.42); backdrop-filter: blur(3px); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; z-index: 55; }
+            .sidebar-overlay.open { opacity: 1; pointer-events: all; }
+            .sidebar { position: fixed; inset: 0 auto 0 0; height: 100vh; z-index: 60; transform: translateX(-100%); box-shadow: 12px 0 40px rgba(10, 10, 20, 0.18); }
+            .sidebar.open { transform: translateX(0); }
+            .main { width: 100%; height: auto; min-height: 100vh; }
+            .topbar { height: auto; flex-wrap: wrap; padding: 16px 16px 14px; gap: 12px; }
+            .topbar-header { width: 100%; order: 1; }
+            .topbar-title { min-width: 0; }
+            .topbar-divider { display: none; }
+            .search-wrap { order: 2; max-width: none; width: 100%; }
+            .content { padding: 16px; gap: 16px; }
+            .table-card { border-radius: 1rem; }
+            .modal-header, .modal-toolbar { padding-left: 16px; padding-right: 16px; }
+        }
+        @media (max-width: 560px) {
+            .sidebar-toggle { order: 0; }
+            .search-wrap { order: 2; }
+            .topbar-page { font-size: 14px; }
+            .table-card { border-radius: 14px; }
+            .agenda-item { padding: 12px; flex-direction: column; gap: 8px;}
+            .agenda-dot { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-mark">
+                <img src="Assets/logo/mora.png" alt="Mora">
+            </div>
+            <span class="logo-text">Mora</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                </svg>
+                Dashboard
+            </a>
+            <a href="siswa.html" class="nav-item">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Data Siswa
+            </a>
+            <a href="guru.html" class="nav-item">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+                Data Guru
+            </a>
+            <a href="#" class="nav-item active">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Jadwal Agenda
+            </a>
+            <a href="input-poin.html" class="nav-item">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 21a6 6 0 0112 0" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 8v6m3-3h-6" />
+                </svg>
+                Input Poin Siswa
+            </a>
+        </nav>
+
+        <div>
+            <div style="position:relative;">
+                <div id="profileDropdown" class="profile-dropdown">
+                    <div class="dropdown-item" onclick="openModal('modalPengaturan'); closeProfileMenu()">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Pengaturan
+                    </div>
+                    <div class="dropdown-sep"></div>
+                    <a href="index.html" class="dropdown-item danger">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        Logout
+                    </a>
+                </div>
+
+                <div class="sidebar-footer">
+                    <div class="profile-card" id="profileTrigger" onclick="toggleProfileMenu()">
+                        <img src="https://ui-avatars.com/api/?name=Aoddi+Pechokov&background=2b3de4&color=fff&rounded=true" alt="Admin" class="profile-avatar">
+                        <div>
+                            <div class="profile-name">Aoddi Pechokov</div>
+                            <div class="profile-role">Admin</div>
+                        </div>
+                        <div class="profile-menu-btn">
+                            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="5" r="1" fill="currentColor" />
+                                <circle cx="12" cy="12" r="1" fill="currentColor" />
+                                <circle cx="12" cy="19" r="1" fill="currentColor" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div class="topbar-header">
+                <div class="topbar-title">
+                    <span class="topbar-greeting" id="greetingText"></span>
+                    <span class="topbar-page">Aoddi Pechokov</span>
+                </div>
+               
+        </header>
+
+        <div class="content">
+            
+            <div class="table-card" style="display: flex; flex-direction: column; flex: 1; min-height: 0;">
+                
+                <div class="modal-header">
+                    <div class="modal-header-left">
+                        <div class="modal-icon" style="background:color-mix(in srgb,var(--primary) 12%,transparent);color:var(--primary);">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="modal-title">Jadwal Agenda Sekolah</div>
+                            <div class="modal-subtitle">Timeline acara dan kalender akademik aktif</div>
+                        </div>
+                    </div>
+                    
+                    <button class="add-btn" onclick="openModal('modalTambahAgenda')">
+                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Tambah Agenda
+                    </button>
+                    
+                </div>
+                
+                <div class="modal-toolbar">
+                    <input type="text" class="modal-input" id="searchAgenda" placeholder="Cari judul atau detail acara..." onkeyup="filterAgenda()">
+                </div>
+                
+                <div class="modal-body custom-scrollbar" id="listAgendaModal">
+                    <div class="agenda-item search-item">
+                        <div class="agenda-dot" style="background:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb, var(--primary) 15%, transparent);"></div>
+                        <div>
+                            <div class="agenda-date" style="color:var(--primary);">16 MEI 2026</div>
+                            <div class="agenda-title search-name">Seleksi final tim olimpiade sains tingkat sekolah</div>
+                            <div class="agenda-desc search-desc">Siswa terpilih mengikuti sesi presentasi dan wawancara untuk menentukan perwakilan sekolah pada kompetisi sains antar-kota.</div>
+                        </div>
+                    </div>
+
+                    <div class="agenda-item search-item">
+                        <div class="agenda-dot" style="background:var(--success);box-shadow:0 0 0 3px color-mix(in srgb, var(--success) 15%, transparent);"></div>
+                        <div>
+                            <div class="agenda-date" style="color:var(--success);">20 MEI 2026</div>
+                            <div class="agenda-title search-name">Donor darah dan bazar karya siswa untuk kegiatan sosial</div>
+                            <div class="agenda-desc search-desc">Kegiatan kolaborasi bersama puskesmas dan OSIS untuk mengajak siswa peduli kesehatan sekaligus mengumpulkan dana sosial.</div>
+                        </div>
+                    </div>
+
+                    <div class="agenda-item search-item">
+                        <div class="agenda-dot" style="background:var(--warning);box-shadow:0 0 0 3px color-mix(in srgb, var(--warning) 15%, transparent);"></div>
+                        <div>
+                            <div class="agenda-date" style="color:var(--warning);">05 JUNI 2026</div>
+                            <div class="agenda-title search-name">Studi lapangan ke museum dan pusat sains kota</div>
+                            <div class="agenda-desc search-desc">Siswa belajar langsung dari pameran interaktif untuk menambah wawasan sains, sejarah, dan teknologi secara menyenangkan.</div>
+                        </div>
+                    </div>
+
+                    <div class="agenda-item search-item">
+                        <div class="agenda-dot" style="background:var(--destructive);box-shadow:0 0 0 3px color-mix(in srgb, var(--destructive) 15%, transparent);"></div>
+                        <div>
+                            <div class="agenda-date" style="color:var(--destructive);">17 JUNI 2026</div>
+                            <div class="agenda-title search-name">Aksi bersih sekolah dan gotong royong bersama kelas</div>
+                            <div class="agenda-desc search-desc">Seluruh siswa diajak menjaga lingkungan sekolah melalui kerja bakti, pemilahan sampah, dan penghijauan area kelas.</div>
+                        </div>
+                    </div>
+
+                    <div class="empty-state" id="emptyStateAgenda">Agenda dengan kata kunci tersebut tidak ditemukan.</div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="modalTambahAgenda" class="modal-overlay">
+        <div class="modal-popup">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <div class="modal-icon" style="background:color-mix(in srgb,var(--primary) 12%,transparent);color:var(--primary);">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="modal-title">Tambah Agenda Baru</div>
+                        <div class="modal-subtitle">Buat jadwal acara atau kegiatan sekolah.</div>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeModal('modalTambahAgenda')">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formTambahAgenda" onsubmit="saveAgenda(event)">
+                    <div style="display:flex;flex-direction:column;gap:12px;padding:6px 0 14px;">
+                        <input type="date" class="modal-input" id="agendaDate" required>
+                        <input type="text" class="modal-input" id="agendaTitle" placeholder="Judul Kegiatan (Cth: Ujian Tengah Semester)" required>
+                        <textarea class="modal-input" id="agendaDesc" placeholder="Deskripsi atau rincian kegiatan..." style="min-height:90px;resize:vertical;" required></textarea>
+                        
+                        <select class="modal-select" id="agendaColor" required>
+                            <option value="" disabled selected>Pilih Kategori (Warna Tag)</option>
+                            <option value="primary">Biru (Akademik / Umum)</option>
+                            <option value="success">Hijau (Sosial / Sukses)</option>
+                            <option value="warning">Kuning (Penting / Info)</option>
+                            <option value="destructive">Merah (Wajib / Peringatan)</option>
+                        </select>
+                        
+                        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px;">
+                            <button type="button" class="text-btn" onclick="closeModal('modalTambahAgenda')">Batal</button>
+                            <button type="submit" class="btn btn-primary" style="padding: 10px 18px; border-radius: 12px; font-size: 13px;">Simpan Agenda</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.add('open');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('open');
+        }
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', e => {
+                if (e.target === overlay) overlay.classList.remove('open');
+            });
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+                closeSidebar();
+            }
+        });
+
+        function saveAgenda(e) {
+            e.preventDefault(); 
+            
+            const dateInput = document.getElementById('agendaDate').value;
+            const title = document.getElementById('agendaTitle').value.trim();
+            const desc = document.getElementById('agendaDesc').value.trim();
+            const colorKey = document.getElementById('agendaColor').value;
+            
+            const colorMap = {
+                'primary': 'var(--primary)',
+                'success': 'var(--success)',
+                'warning': 'var(--warning)',
+                'destructive': 'var(--destructive)'
+            };
+            const colorHex = colorMap[colorKey] || 'var(--primary)';
+
+            const dateObj = new Date(dateInput);
+            const formattedDate = dateObj.toLocaleDateString('id-ID', {
+                day: '2-digit', 
+                month: 'short', 
+                year: 'numeric'
+            }).toUpperCase();
+
+            const list = document.getElementById('listAgendaModal');
+            const emptyState = document.getElementById('emptyStateAgenda');
+            
+            const item = document.createElement('div');
+            item.className = 'agenda-item search-item';
+            
+            item.innerHTML = `
+                <div class="agenda-dot" style="background:${colorHex};box-shadow:0 0 0 3px color-mix(in srgb, ${colorHex} 15%, transparent);"></div>
+                <div>
+                    <div class="agenda-date" style="color:${colorHex};">${formattedDate}</div>
+                    <div class="agenda-title search-name">${title}</div>
+                    <div class="agenda-desc search-desc">${desc}</div>
+                </div>
+            `;
+            
+            list.insertBefore(item, list.firstChild);
+            
+            document.getElementById('formTambahAgenda').reset();
+            closeModal('modalTambahAgenda');
+            
+            emptyState.style.display = 'none';
+        }
+
+        function filterAgenda() {
+            const s = document.getElementById('searchAgenda').value.toLowerCase();
+            const items = document.querySelectorAll('#listAgendaModal .search-item');
+            const empty = document.getElementById('emptyStateAgenda');
+            let count = 0;
+            
+            items.forEach(item => {
+                const title = item.querySelector('.search-name').textContent.toLowerCase();
+                const desc = item.querySelector('.search-desc').textContent.toLowerCase();
+                
+                if (title.includes(s) || desc.includes(s)) {
+                    item.style.display = 'flex';
+                    count++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            empty.style.display = count === 0 ? 'block' : 'none';
+        }
+
+        function toggleProfileMenu() {
+            document.getElementById('profileDropdown').classList.toggle('open');
+        }
+        function closeProfileMenu() {
+            document.getElementById('profileDropdown').classList.remove('open');
+        }
+        document.addEventListener('click', e => {
+            const trigger = document.getElementById('profileTrigger');
+            const dropdown = document.getElementById('profileDropdown');
+            if (trigger && dropdown && !trigger.contains(e.target) && !dropdown.contains(e.target)) {
+                closeProfileMenu();
+            }
+        });
+
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+
+        function openSidebar() {
+            sidebar.classList.add('open');
+            sidebarOverlay.classList.add('open');
+            document.body.classList.add('sidebar-open');
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('open');
+            document.body.classList.remove('sidebar-open');
+        }
+        function toggleSidebar() {
+            if (sidebar.classList.contains('open')) closeSidebar();
+            else openSidebar();
+        }
+
+        if(sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if(sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) closeSidebar();
+        });
+
+        function setGreeting() {
+            const hour = new Date().getHours();
+            let greeting = 'Selamat malam';
+            if (hour >= 5 && hour < 12) greeting = 'Selamat pagi';
+            else if (hour >= 12 && hour < 18) greeting = 'Selamat siang';
+            document.getElementById('greetingText').textContent = `${greeting},`;
+        }
+
+        setGreeting();
+    </script>
+</body>
+</html>
