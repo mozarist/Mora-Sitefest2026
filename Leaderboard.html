@@ -41,7 +41,7 @@
 
 <body class="custom-scrollbar">
   <div
-    class="box-border w-[min(80vw,1280px)] min-h-screen mx-auto py-8 max-[960px]:w-full max-[960px]:px-4 max-[640px]:px-3">
+    class="box-border w-[min(80vw,1280px)] min-h-screen mx-auto py-8 pb-16 max-[960px]:w-full max-[960px]:px-4 max-[640px]:px-3">
     <a class="inline-flex items-center gap-1 min-h-6 text-sm font-bold text-primary underline underline-offset-2 hover:text-primary hover:translate-x-0.5 transition"
       href="index.html">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -54,44 +54,37 @@
     </a>
 
     <div data-aos="fade-up" class="space-y-2 text-center py-8">
-      <h1 class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-medium text-primary tracking-tighter">
+      <h1 class="text-2xl md:text-4xl lg:text-5xl 2xl:text-6xl font-medium text-primary tracking-tighter">
         Leaderboard Poin Mora
       </h1>
       <p class="mx-auto max-w-[680px] text-xs md:text-sm xl:text-base text-muted-foreground">
-        Monitoring peringkat kelas berdasarkan akumulasi poin terbaru.
+        Menciptakan kompetisi sehat dengan peringkat kelas berdasarkan akumulasi poin terbaru.
+        3 kelas teratas dengan perolehan poin terbanyak dapat memilih salah satu dari rewards mora!
       </p>
     </div>
 
     <section data-aos="fade-up" class="mb-7 pt-7 pattern-radial overflow-hidden rounded-t-2xl border-t border-border">
-      <div class="flex flex-col items-center gap-4 mb-10 text-center" aria-label="Konteks podium">
+      <div class="flex flex-col items-center gap-4 md:mb-10 text-center" aria-label="Konteks podium">
         <span
-          class="inline-flex items-center rounded-full border border-border bg-primary/10 text-primary px-2.5 py-1 text-sm font-semibold">
+          class="inline-flex items-center rounded-full border border-border bg-surface text-primary px-2.5 py-1 text-sm font-semibold">
           Top 3 kelas terbaik
         </span>
       </div>
-      <div id="global-podium" class="mx-auto flex grid-cols-1 md:grid-cols-3 items-end justify-items-stretch gap-4 md:gap-0 -space-x-4 max-w-[980px]">
+      <div id="global-podium" class="mx-auto flex items-end justify-center justify-items-stretch gap-4 md:gap-0 -space-x-4 max-w-[980px] scale-70 md:scale-100">
       </div>
     </section>
 
-    <div data-aos="fade-up" class="mt-8 flex justify-center">
-      <button id="class-ranking-toggle" type="button" aria-expanded="false" aria-controls="class-rankings"
-        class="btn btn-outline gap-2" style="padding: 0.7rem 1rem; font-size: 0.8125rem">
-        <i class="bx bx-list-ol text-base" aria-hidden="true" data-toggle-icon></i>
-        <span data-toggle-label>Lihat Seluruh Peringkat Kelas</span>
-      </button>
-    </div>
-
-    <section data-aos="fade-up" id="class-rankings" class="hidden mt-8 card">
-      <div class="mb-3 text-center">
-        <h3 class="m-0 text-[clamp(22px,1.4vw,28px)] font-medium text-primary">Peringkat Kelas Per Angkatan</h3>
+    <section data-aos="fade-up" id="class-rankings" class="mt-16">
+      <div class="mb-6 text-center">
+        <h3 class="m-0 text-2xl md:text-3xl xl:text-3xl font-medium text-primary tracking-tighter">Peringkat Kelas Per Angkatan</h3>
         <p class="m-0 mt-1 text-xs md:text-sm text-muted-foreground">
           Urutan kelas di setiap angkatan berdasarkan akumulasi poin terbaru.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <article data-tier-card class="flex flex-col">
-          <div class="rounded-xl border border-border bg-muted/25 p-3 mb-2.5">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+        <article data-tier-card class="flex flex-col card">
+          <div class="mb-2.5">
             <div class="flex items-center justify-between gap-3 mb-2">
               <span
                 class="inline-flex items-center justify-center min-w-[42px] h-7 rounded-full px-2.5 text-xs font-extrabold bg-primary text-primary-foreground">
@@ -139,8 +132,8 @@
           </div>
         </article>
 
-        <article data-tier-card class="flex flex-col">
-          <div class="rounded-xl border border-border bg-muted/25 p-3 mb-2.5">
+        <article data-tier-card class="flex flex-col card">
+          <div class="mb-2.5">
             <div class="flex items-center justify-between gap-3 mb-2">
               <span
                 class="inline-flex items-center justify-center min-w-[42px] h-7 rounded-full px-2.5 text-xs font-extrabold bg-secondary text-secondary-foreground">
@@ -188,8 +181,8 @@
           </div>
         </article>
 
-        <article data-tier-card class="flex flex-col">
-          <div class="rounded-xl border border-border bg-muted/25 p-3 mb-2.5">
+        <article data-tier-card class="flex flex-col card">
+          <div class="mb-2.5">
             <div class="flex items-center justify-between gap-3 mb-2">
               <span
                 class="inline-flex items-center justify-center min-w-[42px] h-7 rounded-full px-2.5 text-xs font-extrabold bg-info text-info-foreground">
@@ -239,7 +232,7 @@
       </div>
     </section>
 
-    <section data-aos="fade-up" class="hidden mt-8 card">
+    <section data-aos="fade-up" class="hidden mt-8 ">
       <div class="mb-3">
         <h3 class="text-[clamp(24px,1.4vw,28px)] font-medium text-primary">Perolehan/Pengurangan Poin</h3>
       </div>
@@ -491,18 +484,18 @@
         if (rank === 1) {
           return (
             common +
-            " border-warning min-h-[250px] md:min-h-[270px]"
+            " border-warning min-h-[270px]"
           );
         }
         if (rank === 2) {
           return (
             common +
-            " border-muted-foreground/70 min-h-[250px] md:min-h-[240px]"
+            " border-muted-foreground/70 min-h-[240px]"
           );
         }
         return (
           common +
-          " border-info min-h-[250px] md:min-h-[220px]"
+          " border-info min-h-[220px]"
         );
       }
 
