@@ -99,6 +99,7 @@
       </div>
     </nav>
   </header>
+  <div id="mobile-nav-overlay" aria-hidden="true"></div>
 
   <!-- hero -->
   <section id=""
@@ -831,6 +832,76 @@
     AOS.init({
       once: true
     });
+  </script>
+  <script>
+    (function () {
+      const navToggle = document.getElementById("nav-toggle");
+      const navMenu = document.getElementById("site-nav-menu");
+      const navIcon = document.getElementById("nav-toggle-icon");
+      const navOverlay = document.getElementById("mobile-nav-overlay");
+
+      if (!navToggle || !navMenu || !navIcon || !navOverlay) return;
+
+      function setIcon(open) {
+        navIcon.innerHTML = open
+          ? '<path d="M6 6 18 18" /><path d="M18 6 6 18" />'
+          : '<path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" />';
+      }
+
+      function openNav() {
+        navMenu.classList.remove("hidden");
+        navOverlay.classList.add("is-open");
+        document.body.classList.add("mobile-nav-open");
+        navToggle.setAttribute("aria-expanded", "true");
+        navToggle.setAttribute("aria-label", "Close navigation menu");
+        setIcon(true);
+        requestAnimationFrame(function () {
+          navMenu.classList.add("is-open");
+        });
+      }
+
+      function closeNav() {
+        navMenu.classList.remove("is-open");
+        navOverlay.classList.remove("is-open");
+        document.body.classList.remove("mobile-nav-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Open navigation menu");
+        setIcon(false);
+
+        window.setTimeout(function () {
+          if (!navMenu.classList.contains("is-open") && window.innerWidth < 768) {
+            navMenu.classList.add("hidden");
+          }
+        }, 220);
+      }
+
+      navToggle.addEventListener("click", function () {
+        if (navMenu.classList.contains("is-open")) closeNav();
+        else openNav();
+      });
+
+      navOverlay.addEventListener("click", closeNav);
+
+      navMenu.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", closeNav);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") closeNav();
+      });
+
+      window.addEventListener("resize", function () {
+        if (window.innerWidth >= 768) {
+          navMenu.classList.remove("hidden", "is-open");
+          navOverlay.classList.remove("is-open");
+          document.body.classList.remove("mobile-nav-open");
+          navToggle.setAttribute("aria-expanded", "false");
+          setIcon(false);
+        } else if (!navMenu.classList.contains("is-open")) {
+          navMenu.classList.add("hidden");
+        }
+      });
+    })();
   </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
