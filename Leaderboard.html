@@ -42,7 +42,7 @@
 <body class="custom-scrollbar">
   <div
     class="box-border w-[min(80vw,1280px)] min-h-screen mx-auto py-8 max-[960px]:w-full max-[960px]:px-4 max-[640px]:px-3">
-    <a class="inline-flex items-center gap-1 min-h-6 mb-4 text-sm font-bold text-primary underline underline-offset-2 hover:text-primary hover:translate-x-0.5 transition"
+    <a class="inline-flex items-center gap-1 min-h-6 text-sm font-bold text-primary underline underline-offset-2 hover:text-primary hover:translate-x-0.5 transition"
       href="index.html">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -53,7 +53,7 @@
       Kembali
     </a>
 
-    <div data-aos="fade-up" class="space-y-2 text-center py-8 border-b border-border">
+    <div data-aos="fade-up" class="space-y-2 text-center py-8">
       <h1 class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-medium text-primary tracking-tighter">
         Leaderboard Poin Mora
       </h1>
@@ -62,14 +62,14 @@
       </p>
     </div>
 
-    <section data-aos="fade-up" class="mb-7 pt-7 pattern-grid overflow-hidden">
+    <section data-aos="fade-up" class="mb-7 pt-7 pattern-radial overflow-hidden rounded-t-2xl border-t border-border">
       <div class="flex flex-col items-center gap-4 mb-10 text-center" aria-label="Konteks podium">
         <span
-          class="inline-flex items-center rounded-full border border-border bg-primary/10 text-primary px-2.5 py-1 text-[13px] font-bold">
+          class="inline-flex items-center rounded-full border border-border bg-primary/10 text-primary px-2.5 py-1 text-sm font-semibold">
           Top 3 kelas terbaik
         </span>
       </div>
-      <div id="global-podium" class="mx-auto grid grid-cols-1 md:grid-cols-3 items-end justify-items-stretch gap-4 md:gap-1.5 max-w-[980px]">
+      <div id="global-podium" class="mx-auto flex grid-cols-1 md:grid-cols-3 items-end justify-items-stretch gap-4 md:gap-0 -space-x-4 max-w-[980px]">
       </div>
     </section>
 
@@ -239,7 +239,7 @@
       </div>
     </section>
 
-    <section data-aos="fade-up" class="mt-8 card">
+    <section data-aos="fade-up" class="hidden mt-8 card">
       <div class="mb-3">
         <h3 class="text-[clamp(24px,1.4vw,28px)] font-medium text-primary">Perolehan/Pengurangan Poin</h3>
       </div>
@@ -487,7 +487,7 @@
 
       function getPodiumCardClasses(rank) {
         const common =
-          "relative mt-2 flex w-full flex-col items-center justify-center rounded-t-3xl border-2 border-b-0 border-r-16 bg-surface p-3 will-change-transform";
+          "relative flex w-full flex-col items-center justify-center rounded-t-2xl border-2 border-b-0 border-t-14 bg-surface p-3 will-change-transform";
         if (rank === 1) {
           return (
             common +
@@ -612,13 +612,13 @@
             return (
               '<article class="relative flex w-full items-stretch transition duration-300 ease-out will-change-transform ' +
               (slot.rank === 1
-                ? "md:hover:translate-y-2 hover:z-15"
+                ? "md:hover:translate-y-3"
                 : slot.rank === 2
-                  ? "md:hover:-translate-x-4"
-                  : "md:hover:translate-x-4") +
+                  ? "md:hover:-translate-x-8"
+                  : "md:hover:translate-x-8") +
               ' md:' +
               (slot.rank === 1
-                ? "order-2"
+                ? "order-2 z-50"
                 : slot.rank === 2
                   ? "order-1"
                   : "order-3") +

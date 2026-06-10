@@ -68,6 +68,11 @@ body {
   background-size: 80px 80px;
 }
 
+.pattern-radial {
+  background-color: var(--background);
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, hsl(from var(--primary) h s l / 10%) 52px), repeating-linear-gradient(var(--muted) 50%, var(--background) 50%);
+}
+
 /* buttons */
 .btn {
   display: inline-flex;
