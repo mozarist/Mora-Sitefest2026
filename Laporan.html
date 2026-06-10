@@ -1,0 +1,1939 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laporan Karakter - Mora</title>
+  <link rel="icon" type="image/png" href="Assets/logo/mora.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      overflow: hidden;
+      letter-spacing: -0.04em;
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 99px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    .app-rail {
+      width: 240px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.24s ease;
+    }
+
+    .menu-toggle {
+      display: none !important;
+    }
+
+    .menu-overlay {
+      display: none;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted-foreground);
+      transition: all 0.15s;
+      position: relative;
+    }
+
+    .icon-btn:hover {
+      background: var(--muted);
+    }
+
+    .icon-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 12px 0 0;
+      border-right: 1px solid var(--border);
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: color-mix(in srgb, var(--primary) 10%, transparent);
+      flex-shrink: 0;
+    }
+
+    .logo-mark img {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-family: "Geist", sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--primary);
+      letter-spacing: -0.06em;
+    }
+
+    .logo-badge {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 8px;
+      color: var(--muted-foreground);
+      background: var(--muted);
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-left: auto;
+    }
+
+    .rail-nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: var(--muted-foreground);
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      letter-spacing: -0.05em;
+      transition: all 0.18s ease;
+      border: 1px solid transparent;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background: var(--muted);
+      color: var(--foreground);
+    }
+
+    .nav-item.active {
+      background: color-mix(in srgb, var(--primary) 10%, transparent);
+      color: var(--primary);
+      border-color: color-mix(in srgb, var(--primary) 20%, transparent);
+    }
+
+    .nav-item svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.75;
+      flex-shrink: 0;
+    }
+
+    .rail-footer {
+      padding: 16px 12px;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      bottom: 78px;
+      left: 12px;
+      right: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 8px;
+      z-index: 50;
+      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.08);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(4px);
+      transition: all 0.18s ease;
+    }
+
+    .profile-dropdown.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--surface-foreground);
+      cursor: pointer;
+      transition: all 0.12s;
+      text-decoration: none;
+    }
+
+    .dropdown-item:hover {
+      background: var(--muted);
+    }
+
+    .dropdown-item svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .dropdown-item.danger {
+      color: var(--destructive);
+    }
+
+    .dropdown-item.danger:hover {
+      background: color-mix(in srgb, var(--destructive) 10%, transparent);
+    }
+
+    .dropdown-sep {
+      height: 1px;
+      background: var(--border);
+      margin: 4px 0;
+    }
+
+    .profile-card {
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 10px;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .profile-card:hover {
+      background: color-mix(in srgb, var(--muted) 50%, var(--border));
+    }
+
+    .profile-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .profile-name {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--foreground);
+      line-height: 1.2;
+    }
+
+    .profile-role {
+      font-size: 10px;
+      color: var(--muted-foreground);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.5px;
+    }
+
+    .profile-menu-btn {
+      margin-left: auto;
+      color: var(--muted-foreground);
+      flex-shrink: 0;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .topbar {
+      height: 82px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      gap: 18px;
+      flex-shrink: 0;
+    }
+
+    .topbar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex: 0 0 auto;
+    }
+
+    .topbar-title {
+      display: flex;
+      flex-direction: column;
+      min-width: 180px;
+    }
+
+    .topbar-greeting {
+      font-size: 12px;
+      color: var(--muted-foreground);
+      font-weight: 500;
+    }
+
+    .topbar-page {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--foreground);
+      letter-spacing: -0.05em;
+      line-height: 1;
+    }
+
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background: var(--background);
+    }
+
+    .page-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .page-title {
+      font-size: clamp(26px, 3vw, 38px);
+      line-height: 1;
+      color: var(--foreground);
+      font-weight: 500;
+      letter-spacing: -0.06em;
+    }
+
+    .page-subtitle {
+      max-width: 620px;
+      margin-top: 8px;
+      color: var(--muted-foreground);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .input-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .form-panel,
+    .summary-panel,
+    .history-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.2rem;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+    }
+
+    .form-panel {
+      padding: 22px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--surface-foreground);
+      letter-spacing: -0.05em;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--foreground);
+      border-radius: 11px;
+      min-height: 44px;
+      padding: 0 12px;
+      font: inherit;
+      font-size: 13px;
+      outline: none;
+      transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+    }
+
+    .field select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      padding-right: 44px;
+      background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9L12 15L18 9' stroke='%23475569' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-position: right 17px center;
+      background-size: 18px 18px;
+      background-repeat: no-repeat;
+    }
+
+    .field select::-ms-expand {
+      display: none;
+    }
+
+    .field textarea {
+      min-height: 118px;
+      resize: vertical;
+      padding: 12px;
+      line-height: 1.5;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      background: var(--surface);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+    }
+
+    .file-upload {
+      display: flex;
+      align-items: center;
+      min-height: 44px;
+      border: 1px solid var(--border);
+      background: var(--background);
+      border-radius: 11px;
+      overflow: hidden;
+    }
+
+    .file-upload input {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .file-upload-button {
+      min-height: 44px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--accent-foreground);
+      border-right: 1px solid var(--border);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      transition:
+        background 0.18s ease,
+        color 0.18s ease;
+    }
+
+    .file-upload-button:hover {
+      background: color-mix(in srgb, var(--accent) 72%, var(--surface));
+    }
+
+    .file-upload-button svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .file-upload-name {
+      min-width: 0;
+      padding: 0 12px;
+      color: var(--muted-foreground);
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-upload:focus-within {
+      background: var(--surface);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+    }
+
+    .searchable-select {
+      position: relative;
+    }
+
+    .native-select-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .custom-select {
+      position: relative;
+    }
+
+    .custom-select-control {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--foreground);
+      border-radius: 11px;
+      min-height: 44px;
+      padding: 0 44px 0 12px;
+      font: inherit;
+      font-size: 13px;
+      text-align: left;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+      transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+    }
+
+    .custom-select-control::after {
+      content: "";
+      position: absolute;
+      right: 17px;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9L12 15L18 9' stroke='%23475569' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 18px 18px;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .custom-select-control:focus,
+    .custom-select.open .custom-select-control {
+      background: var(--surface);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+    }
+
+    .custom-select-menu {
+      position: absolute;
+      z-index: 25;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      display: none;
+      max-height: 210px;
+      overflow-y: auto;
+      padding: 6px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.14);
+    }
+
+    .custom-select.open .custom-select-menu {
+      display: block;
+    }
+
+    .custom-select-option {
+      width: 100%;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--foreground);
+      padding: 9px 10px;
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      font-size: 13px;
+      transition: background 0.15s ease;
+    }
+
+    .custom-select-option:hover,
+    .custom-select-option:focus,
+    .custom-select-option.active {
+      outline: none;
+      background: var(--muted);
+    }
+
+    .searchable-select input {
+      padding-right: 38px;
+    }
+
+    .searchable-select::after {
+      content: "";
+      position: absolute;
+      right: 17px;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      border: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9L12 15L18 9' stroke='%23475569' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 18px 18px;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .student-dropdown {
+      position: absolute;
+      z-index: 20;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      display: none;
+      max-height: 210px;
+      overflow-y: auto;
+      padding: 6px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.14);
+    }
+
+    .student-dropdown.open {
+      display: block;
+    }
+
+    .student-option {
+      width: 100%;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--foreground);
+      padding: 9px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      transition: background 0.15s ease;
+    }
+
+    .student-option:hover,
+    .student-option:focus {
+      outline: none;
+      background: var(--muted);
+    }
+
+    .student-option-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .student-option-nis {
+      color: var(--muted-foreground);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .student-empty-option {
+      padding: 10px;
+      color: var(--muted-foreground);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .segment-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .segment-label {
+      min-height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted-foreground);
+      background: var(--background);
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .segment-option input:checked+.segment-label.add {
+      background: color-mix(in srgb, var(--success) 12%, transparent);
+      color: #15803d;
+      border-color: color-mix(in srgb, var(--success) 42%, transparent);
+    }
+
+    .segment-option input:checked+.segment-label.subtract {
+      background: color-mix(in srgb, var(--destructive) 12%, transparent);
+      color: #b91c1c;
+      border-color: color-mix(in srgb, var(--destructive) 42%, transparent);
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .action-btn {
+      min-height: 44px;
+      border-radius: 9999px;
+      border: 1px solid transparent;
+      padding: 0 16px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.18s ease;
+    }
+
+    .action-btn.secondary {
+      background: var(--surface);
+      color: var(--surface-foreground);
+      border-color: var(--border);
+    }
+
+    .action-btn.primary {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+    }
+
+    .side-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .summary-panel,
+    .history-panel {
+      padding: 18px;
+    }
+
+    .panel-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--foreground);
+      margin-bottom: 12px;
+    }
+
+    .preview-card {
+      border: 1px solid var(--border);
+      background: var(--background);
+      border-radius: 1.2rem;
+      padding: 14px;
+    }
+
+    .preview-student {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .student-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--primary) 14%, transparent);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .preview-name {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+
+    .preview-meta {
+      margin-top: 2px;
+      color: var(--muted-foreground);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10.5px;
+    }
+
+    .preview-points {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    .preview-points span {
+      color: var(--muted-foreground);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .preview-points strong {
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--success);
+    }
+
+    .preview-points strong.minus {
+      color: var(--destructive);
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .history-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 12px;
+      background: var(--background);
+    }
+
+    .history-name {
+      color: var(--foreground);
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+
+    .history-desc {
+      margin-top: 3px;
+      color: var(--muted-foreground);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .history-points {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--success);
+      white-space: nowrap;
+    }
+
+    .history-points.minus {
+      color: var(--destructive);
+    }
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      min-height: 44px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      border-radius: 10px;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.2);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 20, 0.45);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 640px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.96) translateY(8px);
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 24px 80px rgba(10, 10, 30, 0.15);
+    }
+
+    .modal-overlay.open .modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .modal-header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .modal-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .modal-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--foreground);
+      letter-spacing: -0.3px;
+    }
+
+    .modal-subtitle {
+      font-size: 12px;
+      color: var(--muted-foreground);
+      margin-top: 1px;
+    }
+
+    .modal-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted-foreground);
+      transition: all 0.15s;
+    }
+
+    .modal-close:hover {
+      background: color-mix(in srgb, var(--destructive) 10%, transparent);
+      color: var(--destructive);
+      border-color: color-mix(in srgb, var(--destructive) 30%, transparent);
+    }
+
+    .modal-close svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .settings-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border: 1px solid var(--border);
+    }
+
+    .setting-row:not(:last-child) {
+      border-bottom: none;
+      border-radius: 0;
+    }
+
+    .setting-row:first-child {
+      border-radius: 12px 12px 0 0;
+    }
+
+    .setting-row:last-child {
+      border-radius: 0 0 12px 12px;
+    }
+
+    .setting-info-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+
+    .setting-info-desc {
+      font-size: 11px;
+      color: var(--muted-foreground);
+      margin-top: 1px;
+    }
+
+    .toggle {
+      width: 44px;
+      height: 24px;
+      background: var(--border);
+      border-radius: 99px;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .toggle.on {
+      background: var(--primary);
+    }
+
+    .toggle-thumb {
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .toggle.on .toggle-thumb {
+      transform: translateX(20px);
+    }
+
+    @media (max-width: 1200px) {
+      .input-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-stack {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .history-panel {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 900px) {
+      body {
+        overflow: auto;
+      }
+
+      .page-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .page-head>div:first-child {
+        width: 100%;
+      }
+
+      .input-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-stack {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .main {
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .content {
+        overflow: visible;
+      }
+
+      .content {
+        padding: 20px 18px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .menu-toggle {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .menu-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 10, 20, 0.42);
+        backdrop-filter: blur(3px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 55;
+      }
+
+      .menu-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .app-rail {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: 240px;
+        height: 100vh;
+        z-index: 60;
+        transform: translateX(-100%);
+        box-shadow: 12px 0 40px rgba(10, 10, 20, 0.18);
+      }
+
+      .app-rail.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .topbar {
+        height: auto;
+        flex-wrap: wrap;
+        padding: 16px 16px 14px;
+        gap: 12px;
+      }
+
+      .topbar-header {
+        width: 100%;
+        order: 1;
+      }
+
+      .topbar-divider {
+        display: none;
+      }
+
+      .content {
+        padding: 16px;
+      }
+
+      .page-head {
+        margin-bottom: 16px;
+      }
+
+      .side-stack {
+        gap: 16px;
+      }
+
+      .summary-panel,
+      .history-panel {
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-actions {
+        flex-direction: column-reverse;
+      }
+
+      .action-btn {
+        width: 100%;
+      }
+
+      .side-stack {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-header">
+        <a href="index.html" class="brand-link">
+          <div class="logo-mark">
+            <img src="Assets/logo/mora.png" alt="Mora" />
+          </div>
+          <span class="logo-text">Mora</span>
+        </a>
+        <div class="topbar-title">
+          <span class="topbar-greeting">Form laporan siswa</span>
+          <span class="topbar-page">Laporan Karakter</span>
+        </div>
+        <a class="icon-btn" href="index.html" aria-label="Kembali ke beranda">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Laporan Karakter</h1>
+          <p class="page-subtitle">
+            Kirim laporan perilaku siswa ke admin untuk ditinjau. Admin akan mengecek laporan sebelum poin diberikan
+            atau dikurangi.
+          </p>
+        </div>
+      </div>
+
+      <div class="input-layout">
+        <section class="form-panel">
+          <form id="reportForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="reporterName">Nama Pelapor</label>
+                <input id="reporterName" type="text" placeholder="Nama kamu" required />
+              </div>
+
+              <div class="field">
+                <label for="reporterClass">Kelas Pelapor</label>
+                <select id="reporterClass" required>
+                  <option value="">Pilih kelas kamu</option>
+                  <option value="X 1">X 1</option>
+                  <option value="X 2">X 2</option>
+                  <option value="XI 1">XI 1</option>
+                  <option value="XI 2">XI 2</option>
+                  <option value="XII 1">XII 1</option>
+                  <option value="XII 2">XII 2</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="classSelect">Kelas Siswa Dilaporkan</label>
+                <select id="classSelect" required>
+                  <option value="">Pilih kelas</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="studentSearch">Nama Siswa Dilaporkan</label>
+                <div class="searchable-select" id="studentCombo">
+                  <input id="studentSearch" type="text" placeholder="Pilih kelas dulu" autocomplete="off" required
+                    disabled />
+                  <input id="studentSelect" type="hidden" />
+                  <div class="student-dropdown" id="studentDropdown" role="listbox"></div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Jenis Laporan</label>
+                <div class="segmented">
+                  <label class="segment-option">
+                    <input type="radio" name="reportType" value="good" checked />
+                    <span class="segment-label add">Perbuatan Baik</span>
+                  </label>
+                  <label class="segment-option">
+                    <input type="radio" name="reportType" value="bad" />
+                    <span class="segment-label subtract">Perbuatan Buruk</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="reportDate">Tanggal Kejadian</label>
+                <input id="reportDate" type="date" required />
+              </div>
+
+              <div class="field">
+                <label for="categorySelect">Kategori</label>
+                <select id="categorySelect" required>
+                  <option value="">Pilih kategori</option>
+                  <option value="Empati">Empati</option>
+                  <option value="Kedisiplinan">Kedisiplinan</option>
+                  <option value="Lingkungan">Lingkungan</option>
+                  <option value="Bantu Guru">Bantu Guru</option>
+                  <option value="Inisiatif">Inisiatif</option>
+                  <option value="Pelanggaran Kebersihan">Pelanggaran Kebersihan</option>
+                  <option value="Terlambat">Terlambat</option>
+                  <option value="Perundungan">Perundungan</option>
+                  <option value="Kejujuran">Kejujuran</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="evidenceInput">Foto Bukti</label>
+                <div class="file-upload">
+                  <input id="evidenceInput" type="file" accept="image/*" required />
+                  <label class="file-upload-button" for="evidenceInput">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 16.5V19a2 2 0 002 2h14a2 2 0 002-2v-2.5M12 3v13m0-13l-4 4m4-4l4 4" />
+                    </svg>
+                    Pilih Foto
+                  </label>
+                  <span class="file-upload-name" id="evidenceFileName">Belum ada foto</span>
+                </div>
+              </div>
+
+              <div class="field full">
+                <label for="reportNote">Kronologi</label>
+                <textarea id="reportNote" placeholder="Jelaskan apa yang terjadi, lokasi, dan waktu kejadian..." required></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="action-btn secondary" type="reset">Batal</button>
+              <button class="action-btn primary" type="submit">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 12l4 4L19 6" />
+                </svg>
+                Kirim ke Admin
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <div class="side-stack">
+          <section class="summary-panel">
+            <div class="panel-title">Preview Laporan</div>
+            <div class="preview-card">
+              <div class="preview-student">
+                <div class="student-avatar" id="previewInitial">--</div>
+                <div>
+                  <div class="preview-name" id="previewName">
+                    Belum pilih siswa
+                  </div>
+                  <div class="preview-meta" id="previewMeta">Kelas -</div>
+                </div>
+              </div>
+              <div class="preview-points">
+                <span>Status</span>
+                <strong id="previewStatus">Review</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="history-panel">
+            <div class="panel-title">Laporan Terkirim</div>
+            <div class="history-list" id="historyList">
+              <div class="history-item">
+                <div>
+                  <div class="history-name">Hazle Muhammad</div>
+                  <div class="history-desc">
+                    Perbuatan Baik / Empati - XII 1 - Menunggu review
+                  </div>
+                </div>
+                <div class="history-points">Baru</div>
+              </div>
+              <div class="history-item">
+                <div>
+                  <div class="history-name">Shabira Annisa</div>
+                  <div class="history-desc">
+                    Perbuatan Buruk / Terlambat - X 2 - Direview admin
+                  </div>
+                </div>
+                <div class="history-points minus">Cek</div>
+              </div>
+              <div class="history-item">
+                <div>
+                  <div class="history-name">Bintang Pratama</div>
+                  <div class="history-desc">
+                    Perbuatan Baik / Bantu Guru - XI 2 - Disetujui
+                  </div>
+                </div>
+                <div class="history-points">OK</div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="modalPengaturan" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-icon" style="background:var(--muted);color:var(--surface-foreground);">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <div>
+            <div class="modal-title">Pengaturan Akun</div>
+            <div class="modal-subtitle">Konfigurasi akun siswa</div>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeModal('modalPengaturan')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="settings-body">
+        <div style="border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+          <div class="setting-row">
+            <div>
+              <div class="setting-info-title">Notifikasi Laporan</div>
+              <div class="setting-info-desc">Terima info saat laporan mulai direview</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')">
+              <div class="toggle-thumb"></div>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-info-title">Rekap Email</div>
+              <div class="setting-info-desc">Kirim status laporan ke email siswa</div>
+            </div>
+            <div class="toggle" onclick="this.classList.toggle('on')">
+              <div class="toggle-thumb"></div>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-info-title">Mode Gelap</div>
+              <div class="setting-info-desc">Gunakan tema gelap untuk antarmuka</div>
+            </div>
+            <div class="toggle" onclick="this.classList.toggle('on')">
+              <div class="toggle-thumb"></div>
+            </div>
+          </div>
+        </div>
+        <button class="action-btn primary" style="width:100%;border-radius:12px;font-size:14px;font-weight:700;min-height:48px;"
+          onclick="closeModal('modalPengaturan')">Simpan Pengaturan</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Laporan terkirim ke admin.</div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach((overlay) => {
+      overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) overlay.classList.remove('open');
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach((modal) => modal.classList.remove('open'));
+      }
+    });
+
+    const studentsByClass = {
+      "X 1": [
+        { name: "Aliy Syahputra", nis: "X1-001" },
+        { name: "Nadia Putri", nis: "X1-002" },
+        { name: "Rafi Maulana", nis: "X1-003" },
+      ],
+      "X 2": [
+        { name: "Shabira Annisa", nis: "X2-001" },
+        { name: "Dimas Prakoso", nis: "X2-002" },
+        { name: "Kirana Safitri", nis: "X2-003" },
+      ],
+      "XI 1": [
+        { name: "Azka Hirda Kiryawan", nis: "XI1-001" },
+        { name: "Faqih Abdul Nali", nis: "XI1-002" },
+        { name: "Aliy Salsabila", nis: "XI1-003" },
+      ],
+      "XI 2": [
+        { name: "Bintang Pratama", nis: "XI2-001" },
+        { name: "Ghazam Ali Ravandy", nis: "XI2-002" },
+        { name: "Alya Maharani", nis: "XI2-003" },
+      ],
+      "XII 1": [
+        { name: "Hazle Muhammad", nis: "XII1-001" },
+        { name: "Rania Khairunnisa", nis: "XII1-002" },
+        { name: "Bagas Arya", nis: "XII1-003" },
+      ],
+      "XII 2": [
+        { name: "Satria Wibowo", nis: "XII2-001" },
+        { name: "Meisya Farah", nis: "XII2-002" },
+        { name: "Daffa Ramadhan", nis: "XII2-003" },
+      ],
+    };
+
+    const classSelect = document.getElementById("classSelect");
+    const studentSelect = document.getElementById("studentSelect");
+    const studentSearch = document.getElementById("studentSearch");
+    const studentCombo = document.getElementById("studentCombo");
+    const studentDropdown = document.getElementById("studentDropdown");
+    const reporterName = document.getElementById("reporterName");
+    const reporterClass = document.getElementById("reporterClass");
+    const categorySelect = document.getElementById("categorySelect");
+    const evidenceInput = document.getElementById("evidenceInput");
+    const evidenceFileName = document.getElementById("evidenceFileName");
+    const reportDate = document.getElementById("reportDate");
+    const previewInitial = document.getElementById("previewInitial");
+    const previewName = document.getElementById("previewName");
+    const previewMeta = document.getElementById("previewMeta");
+    const previewStatus = document.getElementById("previewStatus");
+    const historyList = document.getElementById("historyList");
+    const toast = document.getElementById("toast");
+    let currentStudents = [];
+    let selectedStudent = null;
+    const enhancedSelects = [];
+
+    function getInitials(name) {
+      return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase();
+    }
+
+    function fillClasses() {
+      Object.keys(studentsByClass).forEach((className) => {
+        const option = document.createElement("option");
+        option.value = className;
+        option.textContent = className;
+        classSelect.appendChild(option);
+      });
+    }
+
+    function closeCustomSelects(except = null) {
+      enhancedSelects.forEach(({ wrapper }) => {
+        if (wrapper !== except) wrapper.classList.remove("open");
+      });
+    }
+
+    function updateEnhancedSelect(select) {
+      const enhanced = enhancedSelects.find((item) => item.select === select);
+      if (!enhanced) return;
+
+      const selectedOption = select.options[select.selectedIndex];
+      enhanced.control.textContent = selectedOption ? selectedOption.textContent : "";
+      enhanced.menu.querySelectorAll(".custom-select-option").forEach((button) => {
+        button.classList.toggle("active", button.dataset.value === select.value);
+      });
+    }
+
+    function enhanceSelect(select) {
+      select.required = false;
+      select.classList.add("native-select-hidden");
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "custom-select";
+
+      const control = document.createElement("button");
+      control.type = "button";
+      control.className = "custom-select-control";
+      control.setAttribute("aria-haspopup", "listbox");
+      control.setAttribute("aria-expanded", "false");
+
+      const menu = document.createElement("div");
+      menu.className = "custom-select-menu";
+      menu.setAttribute("role", "listbox");
+
+      Array.from(select.options).forEach((option) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "custom-select-option";
+        button.dataset.value = option.value;
+        button.textContent = option.textContent;
+        button.addEventListener("click", () => {
+          select.value = option.value;
+          select.dispatchEvent(new Event("change", { bubbles: true }));
+          wrapper.classList.remove("open");
+          control.setAttribute("aria-expanded", "false");
+          updateEnhancedSelect(select);
+        });
+        menu.appendChild(button);
+      });
+
+      control.addEventListener("click", () => {
+        const isOpen = wrapper.classList.toggle("open");
+        control.setAttribute("aria-expanded", String(isOpen));
+        if (isOpen) closeCustomSelects(wrapper);
+      });
+
+      wrapper.append(control, menu);
+      select.insertAdjacentElement("afterend", wrapper);
+      enhancedSelects.push({ select, wrapper, control, menu });
+      updateEnhancedSelect(select);
+    }
+
+    function fillStudents() {
+      const className = classSelect.value;
+      currentStudents = className ? studentsByClass[className] : [];
+      selectedStudent = null;
+      studentSelect.value = "";
+      studentSearch.value = "";
+      studentSearch.setCustomValidity("");
+
+      if (!className) {
+        studentSearch.disabled = true;
+        studentSearch.placeholder = "Pilih kelas dulu";
+        studentDropdown.classList.remove("open");
+        studentDropdown.innerHTML = "";
+        updatePreview();
+        return;
+      }
+
+      studentSearch.disabled = false;
+      studentSearch.placeholder = "Cari atau pilih siswa";
+      renderStudentOptions(currentStudents);
+      updatePreview();
+    }
+
+    function renderStudentOptions(list) {
+      studentDropdown.innerHTML = "";
+
+      if (list.length === 0) {
+        studentDropdown.innerHTML =
+          '<div class="student-empty-option">Siswa tidak ditemukan.</div>';
+        return;
+      }
+
+      list.forEach((student) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "student-option";
+        button.setAttribute("role", "option");
+        button.innerHTML =
+          '<span class="student-option-name">' +
+          student.name +
+          '</span><span class="student-option-nis">' +
+          student.nis +
+          "</span>";
+        button.addEventListener("click", () => selectStudent(student));
+        studentDropdown.appendChild(button);
+      });
+    }
+
+    function openStudentDropdown() {
+      if (!studentSearch.disabled) {
+        studentDropdown.classList.add("open");
+      }
+    }
+
+    function selectStudent(student) {
+      selectedStudent = student;
+      studentSelect.value = student.name;
+      studentSearch.value = student.name;
+      studentSearch.setCustomValidity("");
+      studentDropdown.classList.remove("open");
+      updatePreview();
+    }
+
+    function filterStudentOptions() {
+      const keyword = studentSearch.value.trim().toLowerCase();
+      selectedStudent = null;
+      studentSelect.value = "";
+
+      const filtered = currentStudents.filter((student) => {
+        return (
+          student.name.toLowerCase().includes(keyword) ||
+          student.nis.toLowerCase().includes(keyword)
+        );
+      });
+
+      renderStudentOptions(filtered);
+      openStudentDropdown();
+      updatePreview();
+    }
+
+    function getReportType() {
+      return document.querySelector('input[name="reportType"]:checked').value;
+    }
+
+    function updatePreview() {
+      const studentName = studentSelect.value;
+      const className = classSelect.value || "-";
+      const type = getReportType();
+
+      previewStatus.textContent = type === "bad" ? "Cek Admin" : "Review";
+      previewStatus.classList.toggle("minus", type === "bad");
+
+      if (!studentName) {
+        previewInitial.textContent = "--";
+        previewName.textContent = "Belum pilih siswa";
+        previewMeta.textContent = "Kelas " + className;
+        return;
+      }
+
+      previewInitial.textContent = getInitials(studentName);
+      previewName.textContent = studentName;
+      previewMeta.textContent =
+        "Kelas " +
+        className +
+        " - " +
+        (selectedStudent ? selectedStudent.nis : "NIS");
+    }
+
+    function showToast() {
+      toast.classList.add("show");
+      window.setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    function addHistoryItem() {
+      const type = getReportType();
+      const typeText = type === "bad" ? "Perbuatan Buruk" : "Perbuatan Baik";
+      const evidenceName = evidenceInput.files[0] ? evidenceInput.files[0].name : "Foto bukti";
+      const item = document.createElement("div");
+      item.className = "history-item";
+      item.innerHTML =
+        '<div><div class="history-name">' +
+        studentSelect.value +
+        '</div><div class="history-desc">' +
+        typeText +
+        " / " +
+        categorySelect.value +
+        " - " +
+        classSelect.value +
+        " - " +
+        new Date(reportDate.value).toLocaleDateString("id-ID", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }) +
+        " - Foto: " +
+        evidenceName +
+        '</div></div><div class="history-points ' +
+        (type === "bad" ? "minus" : "") +
+        '">' +
+        "Review" +
+        "</div>";
+      historyList.prepend(item);
+    }
+
+    fillClasses();
+    [reporterClass, classSelect, categorySelect].forEach(enhanceSelect);
+    reportDate.valueAsDate = new Date();
+
+    classSelect.addEventListener("change", fillStudents);
+    studentSearch.addEventListener("focus", openStudentDropdown);
+    studentSearch.addEventListener("input", filterStudentOptions);
+    reporterName.addEventListener("input", updatePreview);
+    reporterClass.addEventListener("change", updatePreview);
+    categorySelect.addEventListener("change", updatePreview);
+    evidenceInput.addEventListener("change", () => {
+      const file = evidenceInput.files[0];
+      if (file && !file.type.startsWith("image/")) {
+        evidenceInput.setCustomValidity("Bukti harus berupa file foto.");
+        evidenceInput.reportValidity();
+        evidenceInput.value = "";
+        evidenceFileName.textContent = "Belum ada foto";
+        return;
+      }
+
+      evidenceInput.setCustomValidity("");
+      evidenceFileName.textContent = file ? file.name : "Belum ada foto";
+    });
+    document.querySelectorAll('input[name="reportType"]').forEach((input) => {
+      input.addEventListener("change", updatePreview);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!studentCombo.contains(event.target)) {
+        studentDropdown.classList.remove("open");
+      }
+      if (!event.target.closest(".custom-select")) {
+        closeCustomSelects();
+      }
+    });
+
+    document.getElementById("reportForm").addEventListener("reset", () => {
+      window.setTimeout(() => {
+        currentStudents = [];
+        selectedStudent = null;
+        studentSelect.value = "";
+        studentSearch.disabled = true;
+        studentSearch.value = "";
+        studentSearch.placeholder = "Pilih kelas dulu";
+        studentSearch.setCustomValidity("");
+        studentDropdown.classList.remove("open");
+        studentDropdown.innerHTML = "";
+        evidenceFileName.textContent = "Belum ada foto";
+        reportDate.valueAsDate = new Date();
+        [reporterClass, classSelect, categorySelect].forEach(updateEnhancedSelect);
+        updatePreview();
+      }, 0);
+    });
+
+    document
+      .getElementById("reportForm")
+      .addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!reporterClass.value) {
+          reporterClass.nextElementSibling.querySelector(".custom-select-control").focus();
+          reporterClass.nextElementSibling.classList.add("open");
+          return;
+        }
+
+        if (!classSelect.value) {
+          classSelect.nextElementSibling.querySelector(".custom-select-control").focus();
+          classSelect.nextElementSibling.classList.add("open");
+          return;
+        }
+
+        if (!studentSelect.value) {
+          studentSearch.setCustomValidity("Pilih siswa dari daftar.");
+          studentSearch.reportValidity();
+          openStudentDropdown();
+          return;
+        }
+
+        if (!categorySelect.value) {
+          categorySelect.nextElementSibling.querySelector(".custom-select-control").focus();
+          categorySelect.nextElementSibling.classList.add("open");
+          return;
+        }
+
+        studentSearch.setCustomValidity("");
+        const evidenceFile = evidenceInput.files[0];
+        if (!evidenceFile || !evidenceFile.type.startsWith("image/")) {
+          evidenceInput.setCustomValidity("Upload foto bukti dulu.");
+          evidenceInput.reportValidity();
+          return;
+        }
+
+        evidenceInput.setCustomValidity("");
+        addHistoryItem();
+        showToast();
+        event.target.reset();
+      });
+
+    updatePreview();
+  </script>
+</body>
+
+</html>
