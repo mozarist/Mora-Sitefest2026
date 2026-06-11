@@ -174,39 +174,35 @@
         const closeLoginButton = document.getElementById("close-login");
         const loginPassword = document.getElementById("login-password");
         const togglePasswordButton = document.getElementById("toggle-password");
-        const togglePasswordIcon = document.getElementById(
-            "toggle-password-icon",
-        );
+        const togglePasswordIcon = document.getElementById("toggle-password-icon");
         const siteHeader = document.querySelector(".site-header");
         const navToggleButton = document.getElementById("nav-toggle");
         const navToggleIcon = document.getElementById("nav-toggle-icon");
         const siteNavMenu = document.getElementById("site-nav-menu");
 
-        let lastScrollY = window.scrollY;
+        let lastScrollY = window.scrollY || 0;
         let navMenuOpen = false;
 
         const closeLoginDialog = () => {
-            if (loginDialog.open) {
+            if (loginDialog && typeof loginDialog.close === "function" && loginDialog.open) {
                 loginDialog.close();
             }
         };
 
         const closeNavMenu = () => {
             navMenuOpen = false;
-            siteNavMenu.classList.add("hidden");
-            navToggleButton.setAttribute("aria-expanded", "false");
-            navToggleButton.setAttribute("aria-label", "Open navigation menu");
-            navToggleIcon.innerHTML =
-                '<path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" />';
+            if (siteNavMenu) siteNavMenu.classList.add("hidden");
+            if (navToggleButton) navToggleButton.setAttribute("aria-expanded", "false");
+            if (navToggleButton) navToggleButton.setAttribute("aria-label", "Open navigation menu");
+            if (navToggleIcon) navToggleIcon.innerHTML = '<path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" />';
         };
 
         const openNavMenu = () => {
             navMenuOpen = true;
-            siteNavMenu.classList.remove("hidden");
-            navToggleButton.setAttribute("aria-expanded", "true");
-            navToggleButton.setAttribute("aria-label", "Close navigation menu");
-            navToggleIcon.innerHTML =
-                '<path d="M6 6 18 18" /><path d="M18 6 6 18" />';
+            if (siteNavMenu) siteNavMenu.classList.remove("hidden");
+            if (navToggleButton) navToggleButton.setAttribute("aria-expanded", "true");
+            if (navToggleButton) navToggleButton.setAttribute("aria-label", "Close navigation menu");
+            if (navToggleIcon) navToggleIcon.innerHTML = '<path d="M6 6 18 18" /><path d="M18 6 6 18" />';
         };
 
         const setHeaderVisibility = () => {
@@ -214,68 +210,84 @@
             const isNearTop = currentScrollY < 24;
             const scrollingDown = currentScrollY > lastScrollY && currentScrollY > 120;
 
-            if (navMenuOpen || isNearTop || !scrollingDown) {
-                siteHeader.classList.remove("is-hidden");
-            } else {
-                siteHeader.classList.add("is-hidden");
+            if (siteHeader) {
+                if (navMenuOpen || isNearTop || !scrollingDown) {
+                    siteHeader.classList.remove("is-hidden");
+                } else {
+                    siteHeader.classList.add("is-hidden");
+                }
             }
 
             lastScrollY = currentScrollY;
         };
 
-        openLoginButtons.forEach((button) => {
-            button.addEventListener("click", () => {
-                loginDialog.showModal();
+        if (openLoginButtons && openLoginButtons.length) {
+            openLoginButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    if (loginDialog && typeof loginDialog.showModal === "function") {
+                        loginDialog.showModal();
+                    }
+                });
             });
-        });
+        }
 
-        navToggleButton.addEventListener("click", () => {
-            if (navMenuOpen) {
-                closeNavMenu();
-            } else {
-                openNavMenu();
-            }
-        });
+        if (navToggleButton) {
+            navToggleButton.addEventListener("click", () => {
+                if (navMenuOpen) {
+                    closeNavMenu();
+                } else {
+                    openNavMenu();
+                }
+            });
+        }
 
-        siteNavMenu.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", closeNavMenu);
-        });
+        if (siteNavMenu) {
+            siteNavMenu.querySelectorAll("a").forEach((link) => {
+                link.addEventListener("click", closeNavMenu);
+            });
+        }
 
-        closeLoginButton.addEventListener("click", closeLoginDialog);
+        if (closeLoginButton) {
+            closeLoginButton.addEventListener("click", closeLoginDialog);
+        }
 
-        togglePasswordButton.addEventListener("click", () => {
-            const showPassword = loginPassword.type === "password";
-            loginPassword.type = showPassword ? "text" : "password";
-            togglePasswordButton.setAttribute("aria-pressed", String(showPassword));
-            togglePasswordButton.setAttribute(
-                "aria-label",
-                showPassword ? "Hide password" : "Show password",
-            );
+        if (togglePasswordButton && loginPassword && togglePasswordIcon) {
+            togglePasswordButton.addEventListener("click", () => {
+                const showPassword = loginPassword.type === "password";
+                loginPassword.type = showPassword ? "text" : "password";
+                togglePasswordButton.setAttribute("aria-pressed", String(showPassword));
+                togglePasswordButton.setAttribute(
+                    "aria-label",
+                    showPassword ? "Hide password" : "Show password",
+                );
 
-            togglePasswordIcon.innerHTML = showPassword
-                ? '<path d="M17.94 17.94A10.73 10.73 0 0 1 12 20c-5.05 0-9.27-3.11-10.94-7.5a1 1 0 0 1 0-.69A11.4 11.4 0 0 1 5 6.17M9.9 4.24A10.94 10.94 0 0 1 12 4c5.05 0 9.27 3.11 10.94 7.5a1 1 0 0 1 0 .69 11.36 11.36 0 0 1-4.16 5.11M1 1l22 22" /><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />'
-                : '<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle cx="12" cy="12" r="3" />';
-        });
+                togglePasswordIcon.innerHTML = showPassword
+                    ? '<path d="M17.94 17.94A10.73 10.73 0 0 1 12 20c-5.05 0-9.27-3.11-10.94-7.5a1 1 0 0 1 0-.69A11.4 11.4 0 0 1 5 6.17M9.9 4.24A10.94 10.94 0 0 1 12 4c5.05 0 9.27 3.11 10.94 7.5a1 1 0 0 1 0 .69 11.36 11.36 0 0 1-4.16 5.11M1 1l22 22" /><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />'
+                    : '<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle cx="12" cy="12" r="3" />';
+            });
+        }
 
-        loginDialog.addEventListener("click", (event) => {
-            const dialogBounds = loginDialog.getBoundingClientRect();
-            const clickedOutside =
-                event.clientX < dialogBounds.left ||
-                event.clientX > dialogBounds.right ||
-                event.clientY < dialogBounds.top ||
-                event.clientY > dialogBounds.bottom;
+        if (loginDialog) {
+            loginDialog.addEventListener("click", (event) => {
+                const dialogBounds = loginDialog.getBoundingClientRect();
+                const clickedOutside =
+                    event.clientX < dialogBounds.left ||
+                    event.clientX > dialogBounds.right ||
+                    event.clientY < dialogBounds.top ||
+                    event.clientY > dialogBounds.bottom;
 
-            if (clickedOutside) {
-                closeLoginDialog();
-            }
-        });
+                if (clickedOutside) {
+                    closeLoginDialog();
+                }
+            });
+        }
 
         window.addEventListener("scroll", setHeaderVisibility, { passive: true });
         document.addEventListener("scroll", setHeaderVisibility, { passive: true });
         window.addEventListener("resize", () => {
             if (window.innerWidth >= 768) {
                 closeNavMenu();
-                siteHeader.classList.remove("is-hidden");
+                if (siteHeader) siteHeader.classList.remove("is-hidden");
             }
         });
 
